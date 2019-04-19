@@ -1,0 +1,16 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Pipeline Stages}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Fetch stage}{section.2}% 3
+\BOOKMARK [3][-]{subsubsection.2.1.1}{PC generator }{subsection.2.1}% 4
+\BOOKMARK [2][-]{subsection.2.2}{Pre-decode stage}{section.2}% 5
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Non-compatible Issues}{subsection.2.2}% 6
+\BOOKMARK [3][-]{subsubsection.2.2.2}{Complex Instructions}{subsection.2.2}% 7
+\BOOKMARK [2][-]{subsection.2.3}{Decode stage}{section.2}% 8
+\BOOKMARK [3][-]{subsubsection.2.3.1}{Control Unit}{subsection.2.3}% 9
+\BOOKMARK [2][-]{subsection.2.4}{Execute stage}{section.2}% 10
+\BOOKMARK [2][-]{subsection.2.5}{Memory stage}{section.2}% 11
+\BOOKMARK [2][-]{subsection.2.6}{Write back stage}{section.2}% 12
+\BOOKMARK [1][-]{section.3}{Hazards}{}% 13
+\BOOKMARK [2][-]{subsection.3.1}{Data Hazards}{section.3}% 14
+\BOOKMARK [2][-]{subsection.3.2}{Branches \046 Control Hazards}{section.3}% 15
+\BOOKMARK [1][-]{section.4}{Opcodes}{}% 16

@@ -1,0 +1,640 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dF:/project arch
+Ealu
+Z0 w1555338284
+Z1 DPx9 processor 6 config 0 22 Yj;ngJolVliFk[X]3lHO80
+Z2 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+Z5 dF:/Architecture
+Z6 8F:/Architecture/src/alu/alu.vhd
+Z7 FF:/Architecture/src/alu/alu.vhd
+l0
+L7
+V<9n;7NSWmal8XLOZW>N<;2
+!s100 XlY]j]homLJh@dHSY;MXT3
+Z8 OP;C;10.4a;61
+32
+Z9 !s110 1555592164
+!i10b 1
+Z10 !s108 1555592164.000000
+Z11 !s90 -reportprogress|300|-work|processor|-2002|-explicit|-stats=none|F:/Architecture/src/alu/alu.vhd|
+Z12 !s107 F:/Architecture/src/alu/alu.vhd|
+!i113 1
+Z13 o-work processor -2002 -explicit -O0
+Z14 tExplicit 1
+Abehavioral
+R1
+R2
+R3
+R4
+DEx4 work 3 alu 0 22 <9n;7NSWmal8XLOZW>N<;2
+l23
+L19
+V:gaVjV]0WA<>_`hNFEj8`3
+!s100 Dl<ld_bcid8geR00T_7=g1
+R8
+32
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+R13
+R14
+Ealuwithflags
+Z15 w1555592125
+R1
+R2
+R3
+R4
+R5
+Z16 8F:/Architecture/src/alu/alu_with_flags.vhd
+Z17 FF:/Architecture/src/alu/alu_with_flags.vhd
+l0
+L7
+V=jgi4E[DEe^N8WgXm]T^G2
+!s100 zn6Q86Z943O>DHc<G9[Ok0
+R8
+32
+R9
+!i10b 1
+R10
+Z18 !s90 -reportprogress|300|-work|processor|-2002|-explicit|-stats=none|F:/Architecture/src/alu/alu_with_flags.vhd|
+Z19 !s107 F:/Architecture/src/alu/alu_with_flags.vhd|
+!i113 1
+R13
+R14
+Astructural
+Z20 DEx9 processor 3 reg 0 22 WVWOikW;NGZ=API2?k>J_0
+DEx9 processor 3 alu 0 22 <9n;7NSWmal8XLOZW>N<;2
+R1
+R2
+R3
+R4
+DEx4 work 12 aluwithflags 0 22 =jgi4E[DEe^N8WgXm]T^G2
+l54
+L27
+Vhb<Ok8H_@fJh@@flFn7d41
+!s100 Q9=[cY9DaXK7=71Jn@?iJ3
+R8
+32
+R9
+!i10b 1
+R10
+R18
+R19
+!i113 1
+R13
+R14
+Ealuwithflagstest
+Z21 w1555338207
+R2
+R3
+R4
+R1
+R5
+Z22 8F:/Architecture/tests/alu/alu_test.vhd
+Z23 FF:/Architecture/tests/alu/alu_test.vhd
+l0
+L7
+V`@Wgbk[@YDU:BozZn?fOf1
+!s100 F[gVmXOhhz=Fe=k0]8d8@2
+R8
+32
+R9
+!i10b 1
+R10
+Z24 !s90 -reportprogress|300|-work|processor|-2002|-explicit|-stats=none|F:/Architecture/tests/alu/alu_test.vhd|
+Z25 !s107 F:/Architecture/tests/alu/alu_test.vhd|
+!i113 1
+R13
+R14
+Atest
+DEx9 processor 12 aluwithflags 0 22 =jgi4E[DEe^N8WgXm]T^G2
+R2
+R3
+R4
+R1
+DEx4 work 16 aluwithflagstest 0 22 `@Wgbk[@YDU:BozZn?fOf1
+l26
+L10
+VH:<UU[@_TWRQCi_;?`dkT1
+!s100 K^o4?b=3P5jDd>`cfoABW3
+R8
+32
+R9
+!i10b 1
+R10
+R24
+R25
+!i113 1
+R13
+R14
+Echeckcompatible
+Z26 w1555584516
+R2
+R1
+R3
+R4
+R5
+Z27 8F:/Architecture/src/fetch_stage/check_compatible/check_compatible.vhd
+Z28 FF:/Architecture/src/fetch_stage/check_compatible/check_compatible.vhd
+l0
+L6
+VzAlKBQ7bGEXoPEc]fEeK61
+!s100 `n@]C:e@6XD4O`QIHn5nW3
+R8
+32
+Z29 !s110 1555592165
+!i10b 1
+Z30 !s108 1555592165.000000
+Z31 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|F:/Architecture/src/fetch_stage/check_compatible/check_compatible.vhd|
+Z32 !s107 F:/Architecture/src/fetch_stage/check_compatible/check_compatible.vhd|
+!i113 1
+Z33 o-work work -2002 -explicit -O0
+R14
+Astructural
+DEx9 processor 10 isloneinst 0 22 69:3RecXU;;MS7JCg]?lg2
+DEx9 processor 10 isportcase 0 22 @;6QQ0[:m]]j9V`W]dN@k1
+DEx9 processor 9 isloaduse 0 22 V=zM`=g5U^K>CSM5aT:]g1
+DEx9 processor 9 ismemcase 0 22 [M[B7?FfP@14CI`7JBULS3
+R2
+R1
+R3
+R4
+DEx4 work 15 checkcompatible 0 22 zAlKBQ7bGEXoPEc]fEeK61
+l27
+L21
+V0MKjQ89mH?WSL[jhz_T<;3
+!s100 YA6zzhb_DE=kBiQ^3BR>N1
+R8
+32
+R29
+!i10b 1
+R30
+R31
+R32
+!i113 1
+R33
+R14
+Pconfig
+R2
+R3
+R4
+w1555592043
+R5
+8F:/Architecture/src/config.vhd
+FF:/Architecture/src/config.vhd
+l0
+L6
+VYj;ngJolVliFk[X]3lHO80
+!s100 4Xm8GUK6VXjg<oSeTg7Qk2
+R8
+32
+R9
+!i10b 1
+R10
+!s90 -reportprogress|300|-work|processor|-2002|-explicit|-stats=none|F:/Architecture/src/config.vhd|
+!s107 F:/Architecture/src/config.vhd|
+!i113 1
+R13
+R14
+Eexecutecontrol
+Z34 w1555592159
+R1
+R2
+R3
+R4
+R5
+Z35 8F:/Architecture/src/decode_stage/execute_control.vhd
+Z36 FF:/Architecture/src/decode_stage/execute_control.vhd
+l0
+L7
+VC^:5`D1Ti0FC:RHY3k2fS3
+!s100 R2KghIk8>;>fG>25WaMYX2
+R8
+32
+R29
+!i10b 1
+R30
+Z37 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|F:/Architecture/src/decode_stage/execute_control.vhd|
+Z38 !s107 F:/Architecture/src/decode_stage/execute_control.vhd|
+!i113 1
+R33
+R14
+Abehavioral
+R1
+R2
+R3
+R4
+DEx4 work 14 executecontrol 0 22 C^:5`D1Ti0FC:RHY3k2fS3
+l17
+L16
+V;BCD:egY1M^i5Z:lQbOaM0
+!s100 ;R5CUKN2839X=nC`VVnOj1
+R8
+32
+R29
+!i10b 1
+R30
+R37
+R38
+!i113 1
+R33
+R14
+Eisloaduse
+Z39 w1555583661
+R2
+R1
+R3
+R4
+R5
+Z40 8F:/Architecture/src/fetch_stage/check_compatible/is_load_use.vhd
+Z41 FF:/Architecture/src/fetch_stage/check_compatible/is_load_use.vhd
+l0
+L6
+VV=zM`=g5U^K>CSM5aT:]g1
+!s100 6ER_gGj^IkLT;Wf8iJ[@U3
+R8
+32
+R29
+!i10b 1
+R30
+Z42 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|F:/Architecture/src/fetch_stage/check_compatible/is_load_use.vhd|
+Z43 !s107 F:/Architecture/src/fetch_stage/check_compatible/is_load_use.vhd|
+!i113 1
+R33
+R14
+Abehavioral
+R2
+R1
+R3
+R4
+DEx4 work 9 isloaduse 0 22 V=zM`=g5U^K>CSM5aT:]g1
+l20
+L19
+V5^G;G]N^B2U8OWla`R[4G0
+!s100 ZeX:L4?FUIa>j1hS2JZRa0
+R8
+32
+R29
+!i10b 1
+R30
+R42
+R43
+!i113 1
+R33
+R14
+Eisloneinst
+Z44 w1555583704
+R2
+R1
+R3
+R4
+R5
+Z45 8F:/Architecture/src/fetch_stage/check_compatible/is_lone_inst.vhd
+Z46 FF:/Architecture/src/fetch_stage/check_compatible/is_lone_inst.vhd
+l0
+L6
+V69:3RecXU;;MS7JCg]?lg2
+!s100 [5DR?g5?U>jUK3aVF?JPe3
+R8
+32
+R29
+!i10b 1
+R30
+Z47 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|F:/Architecture/src/fetch_stage/check_compatible/is_lone_inst.vhd|
+Z48 !s107 F:/Architecture/src/fetch_stage/check_compatible/is_lone_inst.vhd|
+!i113 1
+R33
+R14
+Abehavioral
+R2
+R1
+R3
+R4
+DEx4 work 10 isloneinst 0 22 69:3RecXU;;MS7JCg]?lg2
+l14
+L13
+VUE0QzD^Z@Qm>>6h0n8L^32
+!s100 _95bBb:EBA0gUjRFGO@Vk0
+R8
+32
+R29
+!i10b 1
+R30
+R47
+R48
+!i113 1
+R33
+R14
+Eismemcase
+Z49 w1555587899
+R1
+R2
+R3
+R4
+R5
+Z50 8F:/Architecture/src/fetch_stage/check_compatible/is_mem_case.vhd
+Z51 FF:/Architecture/src/fetch_stage/check_compatible/is_mem_case.vhd
+l0
+L7
+V[M[B7?FfP@14CI`7JBULS3
+!s100 S9Hk:i=Yo:LL>DJNh>U5R3
+R8
+32
+R29
+!i10b 1
+R30
+Z52 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|F:/Architecture/src/fetch_stage/check_compatible/is_mem_case.vhd|
+Z53 !s107 F:/Architecture/src/fetch_stage/check_compatible/is_mem_case.vhd|
+!i113 1
+R33
+R14
+Abehavioral
+R1
+R2
+R3
+R4
+DEx4 work 9 ismemcase 0 22 [M[B7?FfP@14CI`7JBULS3
+l17
+L16
+V?9gZJY21V`@A0<UHg>?jI0
+!s100 X1Q>7Q17h9^:WQ>6A6c[Z2
+R8
+32
+R29
+!i10b 1
+R30
+R52
+R53
+!i113 1
+R33
+R14
+Eismemop
+Z54 w1555583619
+Z55 DPx9 processor 6 config 0 22 G<V9z;POQFVJ7@Z:UA65O3
+R2
+R3
+R4
+R5
+Z56 8F:/Architecture/src/fetch_stage/check_compatible/is_mem_op.vhd
+Z57 FF:/Architecture/src/fetch_stage/check_compatible/is_mem_op.vhd
+l0
+L7
+V1hZKTfR89KTlX4M5D^2HQ2
+!s100 Bcf=>PX<i7MOAT_>`E^G92
+R8
+32
+Z58 !s110 1555583709
+!i10b 1
+Z59 !s108 1555583709.000000
+Z60 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|F:/Architecture/src/fetch_stage/check_compatible/is_mem_op.vhd|
+Z61 !s107 F:/Architecture/src/fetch_stage/check_compatible/is_mem_op.vhd|
+!i113 1
+R33
+R14
+Abehavioral
+R55
+R2
+R3
+R4
+DEx4 work 7 ismemop 0 22 1hZKTfR89KTlX4M5D^2HQ2
+l16
+L15
+V]L^ahK@C0]f>ZZ3Y;Y=bl3
+!s100 ?2D4JJoW4;g=1PT9daWn>2
+R8
+32
+R58
+!i10b 1
+R59
+R60
+R61
+!i113 1
+R33
+R14
+Eisportcase
+Z62 w1555584034
+R2
+R1
+R3
+R4
+R5
+Z63 8F:/Architecture/src/fetch_stage/check_compatible/is_port_case.vhd
+Z64 FF:/Architecture/src/fetch_stage/check_compatible/is_port_case.vhd
+l0
+L6
+V@;6QQ0[:m]]j9V`W]dN@k1
+!s100 <T0DgDC5ZSFC=odAM_8A<0
+R8
+32
+R29
+!i10b 1
+R30
+Z65 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|F:/Architecture/src/fetch_stage/check_compatible/is_port_case.vhd|
+Z66 !s107 F:/Architecture/src/fetch_stage/check_compatible/is_port_case.vhd|
+!i113 1
+R33
+R14
+Abehavioral
+R2
+R1
+R3
+R4
+DEx4 work 10 isportcase 0 22 @;6QQ0[:m]]j9V`W]dN@k1
+l18
+L17
+VkAG^?hJZ^_D75IcaHAjPO0
+!s100 le>J>d1S2glliMeR>:0;k0
+R8
+32
+R29
+!i10b 1
+R30
+R65
+R66
+!i113 1
+R33
+R14
+Epcgen
+Z67 w1555586723
+Z68 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z69 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+R2
+R3
+R4
+R5
+Z70 8F:/Architecture/src/fetch_stage/pc_gen.vhd
+Z71 FF:/Architecture/src/fetch_stage/pc_gen.vhd
+l0
+L6
+Vb7JL4nZoWBLSInnL4Zm[l0
+!s100 f34Ke?C5]L4TL<ZKT5UJD2
+R8
+32
+R9
+!i10b 1
+R10
+Z72 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|F:/Architecture/src/fetch_stage/pc_gen.vhd|
+Z73 !s107 F:/Architecture/src/fetch_stage/pc_gen.vhd|
+!i113 1
+R33
+R14
+Abehavioural
+R68
+R69
+R2
+R3
+R4
+DEx4 work 5 pcgen 0 22 b7JL4nZoWBLSInnL4Zm[l0
+l20
+L19
+VUKSLhMVjJ_@IleCd`>AK90
+!s100 HS=olh52g7P1Q:HkBe?1G0
+R8
+32
+R9
+!i10b 1
+R10
+R72
+R73
+!i113 1
+R33
+R14
+Epcmodule
+Z74 w1555581752
+R3
+R4
+R5
+Z75 8F:/Architecture/src/fetch_stage/PC_Module.vhd
+Z76 FF:/Architecture/src/fetch_stage/PC_Module.vhd
+l0
+L5
+VQ5X60e=6Y3A]`m0D@35dF0
+!s100 lAO>D0IMjYeHnWYTEMbed0
+R8
+32
+R9
+!i10b 1
+R10
+Z77 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|F:/Architecture/src/fetch_stage/PC_Module.vhd|
+Z78 !s107 F:/Architecture/src/fetch_stage/PC_Module.vhd|
+!i113 1
+R33
+R14
+Astructural
+R3
+R4
+DEx4 work 8 pcmodule 0 22 Q5X60e=6Y3A]`m0D@35dF0
+l49
+L21
+V]h7Z;Pc6Q5oD^;zgn_Nj33
+!s100 d<7>I@`o3`:zIPz@6ld>m2
+R8
+32
+R9
+!i10b 1
+R10
+R77
+R78
+!i113 1
+R33
+R14
+Epcreg
+Z79 w1555581796
+R2
+R1
+R3
+R4
+R5
+Z80 8F:/Architecture/src/fetch_stage/pc_reg.vhd
+Z81 FF:/Architecture/src/fetch_stage/pc_reg.vhd
+l0
+L6
+V<Se_H>LWm2bL07OSFSR;B0
+!s100 9lWge8mgba=625V`?m:Kk2
+R8
+32
+R29
+!i10b 1
+R30
+Z82 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|F:/Architecture/src/fetch_stage/pc_reg.vhd|
+Z83 !s107 F:/Architecture/src/fetch_stage/pc_reg.vhd|
+!i113 1
+R33
+R14
+Astructural
+R20
+R2
+R1
+R3
+R4
+DEx4 work 5 pcreg 0 22 <Se_H>LWm2bL07OSFSR;B0
+l17
+L15
+ViW^LF30QS:=bi]I=Sna4B0
+!s100 2AJ99@Lg:Z9<EJZRHSi@@3
+R8
+32
+R29
+!i10b 1
+R30
+R82
+R83
+!i113 1
+R33
+R14
+Ereg
+Z84 w1555327115
+R2
+R1
+R3
+R4
+R5
+Z85 8F:/Architecture/src/common/register.vhd
+Z86 FF:/Architecture/src/common/register.vhd
+l0
+L6
+VWVWOikW;NGZ=API2?k>J_0
+!s100 ]?c45o^0`HeXH3c?joHk62
+R8
+32
+R9
+!i10b 1
+R10
+Z87 !s90 -reportprogress|300|-work|processor|-2002|-explicit|-stats=none|F:/Architecture/src/common/register.vhd|
+Z88 !s107 F:/Architecture/src/common/register.vhd|
+!i113 1
+R13
+R14
+Abehavioral
+R2
+R1
+R3
+R4
+DEx4 work 3 reg 0 22 WVWOikW;NGZ=API2?k>J_0
+l18
+L17
+VQZNM[I@Q>jUbOlYR`;cf02
+!s100 =lH=k7FQ5:9c45@MIKj<c3
+R8
+32
+R9
+!i10b 1
+R10
+R87
+R88
+!i113 1
+R13
+R14
