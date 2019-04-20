@@ -16,7 +16,7 @@ end IsPortCase;
 
 architecture Behavioral of IsPortCase is
 begin
-    process
+    process(opcode1,opcode2)
     begin
         if (opcode1 = op_out or opcode1 = op_in) and
                 (opcode2 = op_out or opcode2 = op_in) then

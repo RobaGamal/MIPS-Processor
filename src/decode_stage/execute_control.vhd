@@ -15,7 +15,7 @@ end ExecuteControl;
 
 architecture Behavioral of ExecuteControl is
 begin
-    process
+    process(dest_adr,opcode)
     begin
         update_flag <= '1';
         alu_fun <= alu_first_op;

@@ -12,7 +12,7 @@ end IsLoneInst;
 
 architecture Behavioral of IsLoneInst is
 begin
-    process
+    process(opcode)
     begin
         if opcode = op_push or opcode = op_pop or
             opcode = op_ldm or opcode = op_call then

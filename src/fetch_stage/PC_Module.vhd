@@ -13,7 +13,8 @@ entity PCModule is
         non_comp_mode: in std_logic := '0';
 	    excep_mode : in std_logic := '0';
 	    branch_mode : in std_logic := '0';
-	    load_address : in std_logic_vector(n-1 downto 0) := (others => '0')
+	    load_address : in std_logic_vector(n-1 downto 0) := (others => '0');
+        pc_addr_out:out std_logic_vector(n-1 downto 0)
     );
 
 end PCModule;
@@ -32,12 +33,12 @@ end component ;
 component PCGen is
     generic(n : integer := 32);
 	port(        
-	normal_mode : in std_logic := '0';
+        normal_mode : in std_logic := '0';
         non_comp_mode: in std_logic := '0';
-	excep_mode : in std_logic := '0';
-	branch_mode : in std_logic := '0';
+        excep_mode : in std_logic := '0';
+        branch_mode : in std_logic := '0';
         pc_old : in std_logic_vector(n-1 downto 0) := (others => '0');
-	load_address : in std_logic_vector(n-1 downto 0) := (others => '0');
+        load_address : in std_logic_vector(n-1 downto 0) := (others => '0');
         pc_new : out std_logic_vector(n-1 downto 0) := (others => '0')
     
         
@@ -58,4 +59,6 @@ begin
     port map(
         pc_in, pc_out, '1', clk, rst
     );
+
+pc_addr_out<=pc_out;
 end Structural;

@@ -18,7 +18,7 @@ end IsLoadUse;
 
 architecture Behavioral of IsLoadUse is
 begin
-    process
+    process(opcode1,dst1_adr,src2_adr,dst2_adr)
     begin
         if opcode1 = op_ldd and 
                 (dst1_adr = src2_adr or dst1_adr = dst2_adr) then

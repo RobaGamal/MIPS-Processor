@@ -15,7 +15,7 @@ end IsMemCase;
 
 architecture Behavioral of IsMemCase is
 begin
-    process
+    process(opcode1,opcode2)
     begin
         if (opcode1 = op_ldd or opcode1 = op_std or
                 opcode1 = op_in or opcode1 = op_out) and

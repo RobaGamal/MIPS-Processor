@@ -32,5 +32,5 @@ begin
     opcode <= inst(opcode_h downto opcode_l);
     dest_addr <= inst(destadr_h downto destadr_l);
     src_addr <= inst(srcadr_h downto srcadr_l);
-    imm <= inst(imm_h downto imm_l);
+    --imm <= inst(imm_h downto imm_l);
 end Dataflow;

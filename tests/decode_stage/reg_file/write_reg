@@ -1,0 +1,22 @@
+vsim processor.write_unit
+add wave -position insertpoint  \
+sim:/write_unit/dest1_addr_write \
+sim:/write_unit/dest2_addr_write \
+sim:/write_unit/ld_array \
+sim:/write_unit/output \
+sim:/write_unit/input1 \
+sim:/write_unit/input2 \
+sim:/write_unit/temp \
+sim:/write_unit/temp_ld
+force -freeze sim:/write_unit/dest1_addr_write 4 0
+force -freeze sim:/write_unit/dest2_addr_write 2 0
+force -freeze sim:/write_unit/input2 2 0
+force -freeze sim:/write_unit/input1 3 0
+run
+
+force -freeze sim:/write_unit/dest1_addr_write 5 0
+force -freeze sim:/write_unit/dest2_addr_write 3 0
+force -freeze sim:/write_unit/input2 1 0
+force -freeze sim:/write_unit/input1 4 0
+run
+
