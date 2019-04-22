@@ -15,7 +15,7 @@ end PCReg;
 architecture Structural of PCReg is
 
 begin
-    pc_define: entity processor.Reg32
+    pc_define: entity processor.Reg
  generic map(n)
     port map(
         pc_d, pc_q, ld, clk, rst

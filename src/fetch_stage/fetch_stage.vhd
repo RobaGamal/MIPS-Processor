@@ -15,12 +15,12 @@ port(
       inst1_out: out std_logic_vector(n_word-1 downto 0);
       inst2_out: out std_logic_vector(n_word-1 downto 0);
 
-      pc_immediate : in std_logic_vector(n-1 downto 0) := (others => '0');
-	  normal_mode : in std_logic := '0';
+      pc_immediate : in std_logic_vector(n_pc-1 downto 0) := (others => '0');
+      normal_mode : in std_logic := '0';
       non_comp_mode: in std_logic := '0';
-	  excep_mode : in std_logic := '0';
-	  branch_mode : in std_logic := '0';
-	  load_address : in std_logic_vector(n-1 downto 0) := (others => '0');
+      excep_mode : in std_logic := '0';
+      branch_mode : in std_logic := '0';
+      load_address : in std_logic_vector(n_pc-1 downto 0) := (others => '0');
 
       clk:in std_logic ;
       ld_pc:in std_logic:='1' ;
@@ -60,7 +60,7 @@ pc:entity processor.PCModule
 	excep_mode ,
 	branch_mode ,
 	load_address ,
-        pc_addr_out
+     pc_addr_out
     );
 
 mem:entity processor.instr_ram   Generic map ( n_word )
