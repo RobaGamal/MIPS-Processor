@@ -23,7 +23,9 @@ port(
       load_address : in std_logic_vector(n_pc-1 downto 0) := (others => '0');
 
       clk:in std_logic ;
-      ld_pc:in std_logic:='1' ;
+      stall:in std_logic :='0';
+      ld_pc:in std_logic:='0' ;
+      ld_buff:in std_logic:='0' ;
       rst:in std_logic
 
 );
@@ -33,7 +35,7 @@ end fetch_stage ;
 
 architecture structural of fetch_stage is
 signal pc_addr_out:std_logic_vector(n_pc -1 downto 0);
-signal memout:std_logic_vector(2*n_word-1 downto 0);
+signal memout:std_logic_vector(n_pc-1 downto 0);
 signal inst1: std_logic_vector(n_word-1 downto 0);
 signal inst2: std_logic_vector(n_word-1 downto 0);
 signal opcode1 : opcode_t;
@@ -46,6 +48,7 @@ signal dest2_addr :  regadr_t;
 signal imm2 :  shiftamount_t;
 signal is_compatible:std_logic;
 
+
 begin
 inst1<= memout(2*n_word-1 downto n_word);
 inst2<= memout(n_word-1 downto 0);
@@ -55,6 +58,7 @@ pc:entity processor.PCModule
     port map(
         pc_immediate ,
         ld_pc, clk, rst ,
+	stall,
 	normal_mode ,
         non_comp_mode,
 	excep_mode ,
@@ -62,6 +66,8 @@ pc:entity processor.PCModule
 	load_address ,
      pc_addr_out
     );
+
+
 
 mem:entity processor.instr_ram   Generic map ( n_word )
 	PORT map(
@@ -103,9 +109,12 @@ port map( inst1,
        inst2_out,
        clk,
        rst,
-       is_compatible 
+       ld_buff
 
     );
+
+
+
 
 
 

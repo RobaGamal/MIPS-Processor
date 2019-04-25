@@ -1,0 +1,18 @@
+vsim processor.fetch_stage
+add wave -position insertpoint  \
+sim:/fetch_stage/inst1_out \
+sim:/fetch_stage/inst2_out \
+sim:/fetch_stage/normal_mode \
+sim:/fetch_stage/clk \
+sim:/fetch_stage/ld_pc \
+sim:/fetch_stage/pc_addr_out \
+sim:/fetch_stage/memout \
+sim:/fetch_stage/inst1 \
+sim:/fetch_stage/inst2
+
+mem load -i /home/ruba/Documents/uni/arch/project/MIPS-Processor/memory_files/instr_mem/*.mem /fetch_stage/mem/ram
+force -freeze sim:/fetch_stage/normal_mode 1 0
+force -freeze sim:/fetch_stage/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/fetch_stage/ld_pc 1 0, 0 {50 ps} -r 100
+
+

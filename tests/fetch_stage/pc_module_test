@@ -1,0 +1,30 @@
+vsim processor.pcmodule
+add wave -position insertpoint  \
+sim:/pcmodule/ld \
+sim:/pcmodule/clk \
+sim:/pcmodule/normal_mode \
+sim:/pcmodule/pc_addr_out \
+sim:/pcmodule/pc_in \
+sim:/pcmodule/pc_out \
+sim:/pcmodule/branch_mode \
+sim:/pcmodule/non_comp_mode \
+sim:/pcmodule/excep_mode \
+sim:/pcmodule/load_address \
+force -freeze sim:/pcmodule/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/pcmodule/ld 1 0, 0 {50 ps} -r 100
+force -freeze sim:/pcmodule/normal_mode 1 0
+run 100
+run 100
+run 100
+run 100
+
+
+force -freeze sim:/pcmodule/normal_mode 0 0
+force -freeze sim:/pcmodule/load_address 16 0
+force -freeze sim:/pcmodule/branch_mode 1 0
+
+run 100
+run 100
+force -freeze sim:/pcmodule/excep_mode 1 0
+run 100
+run 100
