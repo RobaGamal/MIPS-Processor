@@ -1,0 +1,26 @@
+vsim processor.checkcompatible
+add wave -position insertpoint  \
+sim:/checkcompatible/opcode1 \
+sim:/checkcompatible/src1_adr \
+sim:/checkcompatible/dst1_adr \
+sim:/checkcompatible/opcode2 \
+sim:/checkcompatible/src2_adr \
+sim:/checkcompatible/dst2_adr \
+sim:/checkcompatible/is_compatible \
+sim:/checkcompatible/is_mem_case \
+sim:/checkcompatible/is_load_use \
+sim:/checkcompatible/is_port_case \
+sim:/checkcompatible/is_lone_inst1 \
+sim:/checkcompatible/is_lone_inst2
+force -freeze sim:/checkcompatible/opcode1 11 0
+force -freeze sim:/checkcompatible/src1_adr 1 0
+force -freeze sim:/checkcompatible/dst1_adr 2 0
+force -freeze sim:/checkcompatible/opcode2 11 0
+force -freeze sim:/checkcompatible/src2_adr 3 0
+force -freeze sim:/checkcompatible/dst2_adr 4 0
+run 100
+force -freeze sim:/checkcompatible/opcode1 26 0
+force -freeze sim:/checkcompatible/src2_adr 2 0
+
+run 100
+

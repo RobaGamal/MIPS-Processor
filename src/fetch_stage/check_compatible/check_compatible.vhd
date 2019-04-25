@@ -50,6 +50,6 @@ begin
             opcode2, is_lone_inst2
         );
     
-    is_compatible <= is_mem_case or is_load_use or is_port_case or
-                    is_lone_inst1 or is_lone_inst2;
+    is_compatible <= not(is_mem_case or is_load_use or is_port_case or
+                    is_lone_inst1 or is_lone_inst2);
 end Structural;

@@ -68,8 +68,7 @@ package config is
 	constant pcregadr : regadr_t := "1000";
 	constant spregadr : regadr_t := "1001";
 	constant immregadr_l : regadr_t := "1010";
-	--constant n_shiftamout : natural := 4;
-        constant n_shiftamout : natural := 3;
+	constant n_shiftamout : natural := 4;
 	subtype shiftamount_t is std_logic_vector(n_shiftamout-1 downto 0);
 	subtype word_t is std_logic_vector(n_word-1 downto 0);
 	type wordarr_t is array(integer range<>) of word_t;

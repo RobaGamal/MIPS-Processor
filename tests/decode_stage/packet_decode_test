@@ -1,0 +1,15 @@
+vsim processor.packetdecode
+add wave -position insertpoint  \
+sim:/packetdecode/inst1 \
+sim:/packetdecode/inst2 \
+sim:/packetdecode/opcode1 \
+sim:/packetdecode/src1_addr \
+sim:/packetdecode/dest1_addr \
+sim:/packetdecode/imm1 \
+sim:/packetdecode/opcode2 \
+sim:/packetdecode/src2_addr \
+sim:/packetdecode/dest2_addr \
+sim:/packetdecode/imm2
+force -freeze sim:/packetdecode/inst1 22672 0
+force -freeze sim:/packetdecode/inst2 22944 0
+run 100

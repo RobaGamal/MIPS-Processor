@@ -15,7 +15,7 @@ begin
     process(opcode)
     begin
         if opcode = op_push or opcode = op_pop or
-            opcode = op_ldd or opcode = op_call then
+            opcode = op_ldm or opcode = op_call then
                 is_lone_inst <= '1';
         else
                 is_lone_inst <= '0';

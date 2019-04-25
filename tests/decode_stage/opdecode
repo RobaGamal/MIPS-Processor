@@ -1,0 +1,8 @@
+vsim processor.opdecode
+add wave -position insertpoint  \
+sim:/opdecode/inst \
+sim:/opdecode/opcode \
+sim:/opdecode/src_addr \
+sim:/opdecode/dest_addr \
+sim:/opdecode/imm
+force -freeze sim:/opdecode/inst 22672 0

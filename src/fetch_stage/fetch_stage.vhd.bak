@@ -47,7 +47,7 @@ signal dest2_addr :  regadr_t;
 signal imm2 :  shiftamount_t;
 signal is_compatible:std_logic;
 signal ld_pc:std_logic:='0' ;
-signal ld_buff: std_logic:='0' ;
+signal d_buff: std_logic:='0' ;
 
 begin
 inst1<= memout(2*n_word-1 downto n_word);

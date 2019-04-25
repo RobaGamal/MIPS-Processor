@@ -20,13 +20,6 @@ ARCHITECTURE syncrama OF instr_ram IS
 	SIGNAL ram : ram_type ;
 	
 	BEGIN
-		--PROCESS(clk) IS
-			--BEGIN
-				--IF rising_edge(clk) THEN  
-					--IF we = '1' THEN
-						--ram(to_integer(unsigned(address))) <= datain;
-					--END IF;
-				--END IF;
-		--END PROCESS;
+		
 		dataout <= ram(to_integer(unsigned(address)))&ram(to_integer(unsigned(address)+1));
 END syncrama;
