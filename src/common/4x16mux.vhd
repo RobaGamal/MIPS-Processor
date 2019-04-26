@@ -12,12 +12,14 @@ entity mux is
          sel: in std_logic_vector(3 downto 0);
          input: in reg_vector;
          immd:in std_logic_vector (n-1 downto 0);
-         output: out std_logic_vector(n-1 downto 0)
-    );
+	 pc_in:in std_logic_vector(2*n-1 downto 0):=(others=>'0');
+         output: out std_logic_vector(n-1 downto 0):=(others=>'0');
+	 pc_out:out std_logic_vector(2*n-1 downto 0):=(others=>'0')
+	     );
 end mux;
 
-architecture behavioural of mux is
 
+architecture behavioural of mux is
 begin 
 process(sel,input)
 begin 
@@ -45,9 +47,12 @@ output<=input(6);
 elsif sel="0111" then 
 output<=input(7);
 
+elsif sel="1000" then 
+pc_out<=pc_in;
 
 elsif sel="1010" then 
 output<=immd  ;
+
 
 end if ;
 end process;

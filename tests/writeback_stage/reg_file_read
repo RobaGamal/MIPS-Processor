@@ -1,4 +1,4 @@
-vsim processor.write_unit
+vsim processor.regfile
 add wave -position insertpoint  \
 sim:/regfile/src1_addr_read \
 sim:/regfile/dest1_addr_read \

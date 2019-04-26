@@ -5,7 +5,7 @@ use processor.config.all;
 
 entity Reg is
     generic (
-        n : natural := n_word -- number of bits
+        n : natural  -- number of bits
     ); 
     port (        
         d  : in std_logic_vector(n-1 downto 0) := (others => '0'); -- parallel input

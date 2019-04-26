@@ -1,0 +1,38 @@
+vsim processor.regfile
+add wave -position insertpoint  \
+sim:/regfile/clk \
+sim:/regfile/src1_addr_read \
+sim:/regfile/dest1_addr_read \
+sim:/regfile/src2_addr_read \
+sim:/regfile/dest2_addr_read \
+sim:/regfile/val_src1_out \
+sim:/regfile/val_dst1_out \
+sim:/regfile/val_src2_out \
+sim:/regfile/val_dst2_out \
+sim:/regfile/immd \
+sim:/regfile/pc_val
+add wave -position insertpoint sim:/regfile/reg_loop(0)/reg/*
+add wave -position insertpoint sim:/regfile/reg_loop(1)/reg/*
+add wave -position insertpoint sim:/regfile/reg_loop(2)/reg/*
+add wave -position insertpoint sim:/regfile/reg_loop(3)/reg/*
+
+force -freeze sim:/regfile/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/regfile/reg_loop(0)/reg/d 1 0
+force -freeze sim:/regfile/l_arr 1 0
+run 100
+force -freeze sim:/regfile/reg_loop(1)/reg/d 2 0
+force -freeze sim:/regfile/l_arr 2 0
+run 100
+force -freeze sim:/regfile/reg_loop(2)/reg/d 3 0
+force -freeze sim:/regfile/l_arr 4 0
+run 100
+force -freeze sim:/regfile/reg_loop(3)/reg/d 4 0
+force -freeze sim:/regfile/l_arr 8 0
+run 100
+
+force -freeze sim:/regfile/src1_addr_read 0 0
+force -freeze sim:/regfile/dest1_addr_read 1 0
+force -freeze sim:/regfile/src2_addr_read 2 0
+force -freeze sim:/regfile/dest2_addr_read 3 0
+run 100
+

@@ -13,10 +13,11 @@ entity Decode_stage is
         val_src1_out:out std_logic_vector(n_word-1 downto 0);
         val_dst2_out:out std_logic_vector(n_word-1 downto 0);
         val_src2_out:out std_logic_vector(n_word-1 downto 0);
+        
         clk:in std_logic;
         rst: in std_logic;
         stall:in std_logic:='0';
-        ld: in std_logic
+        ld: in std_logic:='1'
 
     );
 end Decode_stage;
@@ -58,7 +59,9 @@ signal update_flag_out2:std_logic_vector(0 downto 0);
 signal mem_op_out: std_logic_vector(0 downto 0);
 signal wb_1_out:std_logic_vector(0 downto 0);
 signal wb_2_out:std_logic_vector(0 downto 0);
-
+signal  is_branch_in: std_logic_vector(0 downto 0);
+signal  is_branch1: std_logic;
+signal  is_branch2: std_logic;
 signal  src1_add_out:regadr_t ;
 signal  dst1_add_out:regadr_t ;
 signal  src2_add_out:regadr_t ;
@@ -67,10 +70,12 @@ signal  src1_val_out:std_logic_vector(n_word-1 downto 0);
 signal  dst1_val_out:std_logic_vector(n_word-1 downto 0);
 signal  src2_val_out:std_logic_vector(n_word-1 downto 0);
 signal  dst2_val_out:std_logic_vector(n_word-1 downto 0);
-
-
-
-signal immd: std_logic_vector(n_word-1 downto 0);
+signal pc_temp:std_logic_vector(2*n_word-1 downto 0):=(others=>'0');
+signal pc_out:std_logic_vector(2*n_word-1 downto 0):=(others=>'0');
+signal immd1_out:shiftamount_t;
+signal immd2_out:shiftamount_t;
+signal immd_loadval:std_logic_vector(n_word-1 downto 0);
+signal  is_branch_out: std_logic_vector(0 downto 0);
        
 begin
 packet_decoder:entity processor.PacketDecode port map (        
@@ -133,7 +138,8 @@ regfile:entity processor.regfile
         clk,
         rst,
         pc_val,
-        immd
+	pc_temp,
+        immd_loadval
        
     );
 
@@ -143,6 +149,7 @@ update_flag1(0)<=update_flag1_temp;
 update_flag2(0)<=update_flag2_temp;
 wb1(0)<=wb1temp;
 wb2(0)<=wb2temp;
+
 wb_signal_inst1:entity processor.WBSignal_gen 
     port map(        
         opcode1 ,
@@ -154,18 +161,34 @@ wb_signal_inst2:entity processor.WBSignal_gen
          wb2temp
     );
 
+is_branch_inst1:entity processor.Isbranch 
+    port map(        
+        opcode1,
+        is_branch1
+        
+    );
 
+is_branch_inst2:entity processor.Isbranch 
+    port map(        
+        opcode2,
+        is_branch2
+        
+    );
+is_branch_in(0)<=is_branch1 or is_branch2;
 decode_buffer: entity processor.Decode_Buffer 
 generic map(n_word) 
 
-port map(  alu_fun1,
+port map(  
+	alu_fun1,
         alu_fun2,
         update_flag1,
         update_flag2,
         mem_op_in,
         wb1,
         wb2,
-
+        is_branch_in,
+	    imm1,
+	    imm2,
         src1_addr,
         dest1_addr,
         src2_addr,
@@ -174,7 +197,7 @@ port map(  alu_fun1,
         val_dst1_out_temp,
         val_src2_out_temp,
         val_dst2_out_temp,
-        
+        pc_temp,
 
         alu_op1_out,
         alu_op2_out,
@@ -183,7 +206,7 @@ port map(  alu_fun1,
         mem_op_out,
         wb_1_out,
         wb_2_out,
-
+        is_branch_out,
         src1_add_out,
         dst1_add_out,
         src2_add_out,
@@ -192,10 +215,13 @@ port map(  alu_fun1,
         val_src1_out,
         val_dst2_out,
         val_src2_out,
-
+	immd1_out,
+	immd2_out,
+	pc_out,
         clk,
-        rst,
-        ld_buff
+	ld_buff,
+        rst
+        
 
     );
 

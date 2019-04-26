@@ -12,6 +12,6 @@ sim:/fetch_stage/dest2_addr
 mem load -i /home/ruba/Documents/uni/arch/project/MIPS-Processor/memory_files/instr_mem/*.mem /fetch_stage/mem/ram
 force -freeze sim:/fetch_stage/normal_mode 1 0
 force -freeze sim:/fetch_stage/clk 1 0, 0 {50 ps} -r 100
-force -freeze sim:/fetch_stage/ld_pc 1 0, 0 {50 ps} -r 100
+
 
 

@@ -21,7 +21,9 @@ entity regfile is
        rst: in std_logic;
         --immediate value and pc
        pc_val:in std_logic_vector(2*n-1 downto 0);
+       pc_out:out std_logic_vector(2*n_word-1 downto 0):=(others=>'0');
        immd:in std_logic_vector(n-1 downto 0)
+
        
       
     );
@@ -31,7 +33,6 @@ architecture structural  of regfile is
 signal q_arr : reg_vector;
 signal d_arr : reg_vector;
 signal l_arr : std_logic_vector(n_register-1 downto 0):=(others=>'0');
-
 begin
 
 reg_loop : for i in 0 to n_register-1 generate
@@ -47,18 +48,17 @@ mux1:entity processor.mux generic map(n)
    port map(        
          src1_addr_read ,
          q_arr,
-         immd,
-         val_src1_out
+         immd,pc_val,
+         val_src1_out,pc_out
     );
-
 
 
 mux2:entity processor.mux generic map(n)
    port map (        
         dest1_addr_read ,
          q_arr,
-	immd,
-        val_dst1_out
+	immd,pc_val,
+        val_dst1_out,pc_out
     );
  
 
@@ -67,8 +67,8 @@ mux3:entity processor.mux generic map(n)
    port map(        
          src2_addr_read ,
          q_arr,
-         immd,
-         val_src2_out
+         immd,pc_val,
+         val_src2_out,pc_out
     );
   
 
@@ -76,8 +76,8 @@ mux4:entity processor.mux generic map(n)
    port map(        
         dest2_addr_read ,
          q_arr,
-         immd,
-        val_dst2_out
+         immd,pc_val,
+        val_dst2_out,pc_out
     );
    
 

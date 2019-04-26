@@ -57,7 +57,7 @@ pc:entity processor.PCModule
  generic map(n_pc )
     port map(
         pc_immediate ,
-        ld_pc, clk, rst ,
+        clk, ld_pc, rst ,
 	stall,
 	normal_mode ,
         non_comp_mode,
