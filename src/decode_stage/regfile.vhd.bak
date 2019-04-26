@@ -20,7 +20,7 @@ entity regfile is
        clk:in std_logic;
        rst: in std_logic;
         --immediate value and pc
-       pc_val:in std_logic_vector(2*n-1 downto 0);
+       pc_val:in std_logic_vector(2*n-1 downto 0)
        immd:in std_logic_vector(n-1 downto 0)
        
       

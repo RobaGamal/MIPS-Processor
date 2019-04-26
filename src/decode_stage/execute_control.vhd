@@ -43,7 +43,7 @@ begin
             alu_fun <= alu_shl;
         elsif opcode = op_shr  then
             alu_fun <= alu_shr;
-        elsif opcode = op_ldm  then
+        elsif opcode = op_ldd  then
             alu_fun <= alu_second_op;
         end if;
         if dest_adr = pcregadr or dest_adr = spregadr then

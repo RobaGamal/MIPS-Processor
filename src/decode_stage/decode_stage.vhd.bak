@@ -5,7 +5,7 @@ use processor.config.all;
 
 entity Decode_stage is
     port (   
-        pc_val:in std_logic_vector(2*n_word-1 downto 0);     
+        pc:in std_logic_vector(2*n_word-1 downto 0);     
         inst1 : in word_t;
         inst2 : in word_t;
        

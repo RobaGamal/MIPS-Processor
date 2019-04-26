@@ -13,7 +13,7 @@ port (  alu_op1_in: in  alufun_t;
         alu_op2_in: in  alufun_t;
         update_flag_in1: in std_logic_vector(0 downto 0);
         update_flag_in2: in  std_logic_vector(0 downto 0);
-        mem_op_in:  in std_logic_vector(0 downto 0);
+        mem_op_in: in opcode_t;
         wb_1_in:in std_logic_vector(0 downto 0);
         wb_2_in:in std_logic_vector(0 downto 0);
 
@@ -30,7 +30,7 @@ port (  alu_op1_in: in  alufun_t;
         alu_op2_out: out  alufun_t;
         update_flag_out1: out std_logic_vector(0 downto 0);
         update_flag_out2: out std_logic_vector(0 downto 0);
-        mem_op_out: out std_logic_vector(0 downto 0);
+        mem_op_out: out opcode_t;
         wb_1_out:out  std_logic_vector(0 downto 0);
         wb_2_out:out std_logic_vector(0 downto 0);
 
