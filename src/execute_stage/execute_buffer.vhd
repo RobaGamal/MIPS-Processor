@@ -18,13 +18,12 @@ port (
         src2_add_in:in regadr_t ;
         dst2_add_in:in regadr_t ;
         src1_val_in:in std_logic_vector(n_word-1 downto 0);
-        dst1_val_in:in std_logic_vector(n_word-1 downto 0);
+        dst1_val_in:in std_logic_vector(2*n_word-1 downto 0);
         src2_val_in:in std_logic_vector(n_word-1 downto 0);
-        dst2_val_in:in std_logic_vector(n_word-1 downto 0);
+        dst2_val_in:in std_logic_vector(2*n_word-1 downto 0);
 	   
-    
         mem_op_out: out std_logic_vector(0 downto 0);
-        wb_1_out:out  std_logic_vector(0 downto 0);
+        wb_1_out:out std_logic_vector(0 downto 0);
         wb_2_out:out std_logic_vector(0 downto 0);
         src1_add_out:out regadr_t ;
         dst1_add_out:out regadr_t ;
@@ -34,7 +33,7 @@ port (
         dst1_val_out:out std_logic_vector(n_word-1 downto 0);
         src2_val_out:out std_logic_vector(n_word-1 downto 0);
         dst2_val_out:out std_logic_vector(n_word-1 downto 0);
-
+       
         clk: in std_logic;
         ld:in std_logic:='1';
         rst:in std_logic
@@ -101,7 +100,7 @@ reg8:  entity processor.Reg
     );  
 
 reg9:  entity processor.Reg 
-    generic map(n)
+    generic map(2*n)
     port map(
       dst1_val_in, dst1_val_out,clk,ld, rst
     );     
@@ -113,7 +112,7 @@ reg10:  entity processor.Reg
     ); 
 
  reg11:  entity processor.Reg 
-    generic map(n)
+    generic map(2*n)
     port map(
       dst2_val_in, dst2_val_out,clk,ld, rst
     );     

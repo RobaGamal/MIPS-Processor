@@ -37,8 +37,7 @@ entity Execute_stage is
         val_src1_out:out std_logic_vector(n_word-1 downto 0);
         val_dst2_out:out std_logic_vector(n_word-1 downto 0);
         val_src2_out:out std_logic_vector(n_word-1 downto 0);
-        pc_out:out std_logic_vector(2*n_word-1 downto 0):=(others=>'0');
-
+        
         clk:in std_logic;
         rst: in std_logic;
         stall:in std_logic:='0';
@@ -54,36 +53,78 @@ Architecture Structural of Execute_stage is
 
 signal ld_buff: std_logic;
 
-signal mem_op_out: std_logic_vector(0 downto 0);
-signal wb_1_out:std_logic_vector(0 downto 0);
-signal wb_2_out:std_logic_vector(0 downto 0);
-signal  src1_add_out:regadr_t ;
-signal  dst1_add_out:regadr_t ;
-signal  src2_add_out:regadr_t ;
-signal  dst2_add_out:regadr_t ;
-signal  src1_val_out:std_logic_vector(n_word-1 downto 0);
-signal  dst1_val_out:std_logic_vector(n_word-1 downto 0);
-signal  src2_val_out:std_logic_vector(n_word-1 downto 0);
-signal  dst2_val_out:std_logic_vector(n_word-1 downto 0);
 
-       
+
+
+
+
+signal  val_dest1_out_temp:std_logic_vector(n_word-1 downto 0);
+signal  val_dest2_out_temp:std_logic_vector(n_word-1 downto 0);
+signal  val_dest1_out_temp_extend:std_logic_vector(2*n_word-1 downto 0);
+signal  val_dest2_out_temp_extend:std_logic_vector(2*n_word-1 downto 0);
+signal  z_flag:std_logic;
+signal 	n_flag:std_logic;
+signal	c_flag:std_logic;
+signal update_flag1: std_logic;
+signal update_flag2: std_logic;    
 begin
+update_flag1<=update_flag_in1(0);
+update_flag2<=update_flag_in2(0);
+alu:entity processor.ALUWithFlags 
+	port map(
+		val_src1_in ,
+        val_dst1_in ,
+        alu_op1_in,
+        update_flag1 ,
+        val_src2_in ,
+		val_dst2_in,
+		alu_op1_in,
+        update_flag2 ,
+
+        clk ,
+        rst,
+        val_dest1_out_temp,
+        val_dest2_out_temp,
+        z_flag ,
+		n_flag ,
+		c_flag 
+	);
+
+
+sign_extend1: entity processor.sign_extend
+generic map(n_word)
+port map(
+         val_dest1_out_temp,
+        val_dest1_out_temp_extend
+
+);
+
+sign_extend2: entity processor.sign_extend
+generic map(n_word)
+port map(
+         val_dest2_out_temp,
+         val_dest2_out_temp_extend
+
+);
+
+val_dest1_out_temp_extend<= pc_in when val_dest1_out_temp_extend="00000000000000000000000000000000";
+val_dest2_out_temp_extend<= pc_in when val_dest1_out_temp_extend="00000000000000000000000000000000";
 
 execute_buffer: entity processor.Execute_Buffer 
 generic map(n_word) 
 
 port map(  
         mem_op_in,
-        wb1,
-        wb2,
-        src1_addr,
-        dest1_addr,
-        src2_addr,
-        dest2_addr,
-        val_src1_out,
-        val_dst1_out,
-        val_src2_out,
-        val_dst2_out,
+        wb_1_in,
+        wb_2_in,
+        src1_add_in,
+        dst1_add_in,
+        src2_add_in,
+        dst2_add_in,
+        val_src1_in,
+        val_dest1_out_temp_extend,
+        val_src2_in,
+        val_dest2_out_temp_extend,
         
         mem_op_out,
         wb_1_out,
@@ -92,6 +133,7 @@ port map(
         dst1_add_out,
         src2_add_out,
         dst2_add_out,
+        
         val_dst1_out,
         val_src1_out,
         val_dst2_out,

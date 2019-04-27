@@ -47,10 +47,6 @@ sim:/decode_stage/src1_add_out \
 sim:/decode_stage/dst1_add_out \
 sim:/decode_stage/src2_add_out \
 sim:/decode_stage/dst2_add_out \
-sim:/decode_stage/src1_val_out \
-sim:/decode_stage/dst1_val_out \
-sim:/decode_stage/src2_val_out \
-sim:/decode_stage/dst2_val_out \
 sim:/decode_stage/pc_temp \
 sim:/decode_stage/pc_out \
 

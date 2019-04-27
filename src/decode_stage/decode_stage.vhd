@@ -8,6 +8,7 @@ entity Decode_stage is
         pc_val:in std_logic_vector(2*n_word-1 downto 0);     
         inst1 : in word_t;
         inst2 : in word_t;
+
         src1_add_out:out regadr_t ;
         dst1_add_out:out regadr_t ;
         src2_add_out:out regadr_t ;
