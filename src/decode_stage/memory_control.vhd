@@ -7,7 +7,7 @@ use processor.config.all;
 entity MemoryControl is
     port (        
         opcode : in opcode_t;
-        mem_fun : out std_logic
+        mem_fun : out std_logic_vector(2 downto 0)
         
        
     );
@@ -17,15 +17,15 @@ architecture Behavioral of  MemoryControl is
 begin
     process(opcode)
     begin
-         mem_fun <= '0';
+         mem_fun <= "000";
         if opcode = op_ldm   then
-            mem_fun <= '0';
+            mem_fun <= "001";
         elsif opcode = op_std then
-            mem_fun <= '1';
+            mem_fun <= "011";
         elsif opcode = op_out then
-            mem_fun <= '0';
+            mem_fun <= "001";
         elsif opcode = op_in then
-            mem_fun <= '1';
+            mem_fun <= "011";
         
         end if;
     end process;

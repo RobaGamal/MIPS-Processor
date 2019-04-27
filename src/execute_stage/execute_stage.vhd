@@ -17,7 +17,7 @@ entity Execute_stage is
         alu_op2_in:in alufun_t;
         update_flag_in1:in std_logic_vector(0 downto 0);
         update_flag_in2:in std_logic_vector(0 downto 0);
-        mem_op_in:in std_logic_vector(0 downto 0);
+        mem_op_in:in std_logic_vector(2 downto 0);
         wb_1_in:in std_logic_vector(0 downto 0);
         wb_2_in:in std_logic_vector(0 downto 0);
         is_branch_in:in std_logic_vector(0 downto 0);
@@ -26,7 +26,7 @@ entity Execute_stage is
 	    pc_in:in std_logic_vector(2*n_word-1 downto 0):=(others=>'0');
         
         
-        mem_op_out:out std_logic_vector(0 downto 0);
+        mem_op_out:out std_logic_vector(2 downto 0);
         wb_1_out:out std_logic_vector(0 downto 0);
         wb_2_out:out std_logic_vector(0 downto 0);
         src1_add_out:out regadr_t ;
@@ -64,6 +64,7 @@ signal 	n_flag:std_logic;
 signal	c_flag:std_logic;
 signal update_flag1: std_logic;
 signal update_flag2: std_logic;  
+signal mem_op_temp:std_logic_vector(2 downto 0);
 begin
 ld_buff<= ld or stall ;
 update_flag1<=update_flag_in1(0);
@@ -110,13 +111,28 @@ port map(
 
 process(val_dest1_out_temp_extend,pc_in)
 begin 
+    mem_op_temp<="000";
     if( val_dest1_out_temp_extend="00000000000000000000000000000000") then 
-    val_dest1_out_extend<= pc_in ;
+        val_dest1_out_extend<= pc_in ;
+        if (mem_op_in="001") then 
+           mem_op_temp<="010" ;
+        elsif(mem_op_in="011") then
+            mem_op_temp<="100";
+        end if;
+    
     else
     val_dest1_out_extend<= val_dest1_out_temp_extend ;
     end if;
+    
+    
     if( val_dest2_out_temp_extend="00000000000000000000000000000000") then 
-    val_dest2_out_extend<= pc_in ;
+        val_dest2_out_extend<= pc_in ;
+        if (mem_op_in="001") then 
+            mem_op_temp<="010" ;
+        elsif(mem_op_in="011") then
+            mem_op_temp<="100";
+        end if;
+    
     else
     val_dest2_out_extend<= val_dest2_out_temp_extend;
     end if;
@@ -138,7 +154,7 @@ execute_buffer: entity processor.Execute_Buffer
 generic map(n_word) 
 
 port map(  
-        mem_op_in,
+        mem_op_temp,
         wb_1_in,
         wb_2_in,
         src1_add_in,

@@ -21,7 +21,7 @@ entity Decode_stage is
         alu_op2_out:out alufun_t;
         update_flag_out1:out std_logic_vector(0 downto 0);
         update_flag_out2:out std_logic_vector(0 downto 0);
-        mem_op_out:out std_logic_vector(0 downto 0);
+        mem_op_out:out std_logic_vector(2 downto 0);
         wb_1_out:out std_logic_vector(0 downto 0);
         wb_2_out:out std_logic_vector(0 downto 0);
         is_branch_out:out std_logic_vector(0 downto 0);
@@ -58,9 +58,9 @@ signal update_flag1_temp:std_logic;
 signal update_flag2_temp:std_logic;
 signal update_flag1:std_logic_vector(0 downto 0);
 signal update_flag2:std_logic_vector(0 downto 0);
-signal mem_fun1:std_logic;
-signal mem_fun2:std_logic;
-signal mem_op_in:std_logic_vector(0 downto 0);
+signal mem_fun1:std_logic_vector(2 downto 0);
+signal mem_fun2:std_logic_vector(2 downto 0);
+signal mem_op_in:std_logic_vector(2 downto 0);
 signal wb1:std_logic_vector(0 downto 0);
 signal wb2:std_logic_vector(0 downto 0);
 signal wb1temp:std_logic;
@@ -139,7 +139,7 @@ regfile:entity processor.regfile
        
     );
 
-mem_op_in(0)<=mem_fun1 or mem_fun2;
+mem_op_in<=mem_fun1 or mem_fun2;
 ld_buff<= stall or ld;
 update_flag1(0)<=update_flag1_temp;
 update_flag2(0)<=update_flag2_temp;
