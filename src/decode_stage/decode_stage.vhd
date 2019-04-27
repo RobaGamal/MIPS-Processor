@@ -8,12 +8,25 @@ entity Decode_stage is
         pc_val:in std_logic_vector(2*n_word-1 downto 0);     
         inst1 : in word_t;
         inst2 : in word_t;
-       
+        src1_add_out:out regadr_t ;
+        dst1_add_out:out regadr_t ;
+        src2_add_out:out regadr_t ;
+        dst2_add_out:out regadr_t ;
         val_dst1_out:out std_logic_vector(n_word-1 downto 0);
         val_src1_out:out std_logic_vector(n_word-1 downto 0);
         val_dst2_out:out std_logic_vector(n_word-1 downto 0);
         val_src2_out:out std_logic_vector(n_word-1 downto 0);
-        
+        alu_op1_out:out alufun_t;
+        alu_op2_out:out alufun_t;
+        update_flag_out1:out std_logic_vector(0 downto 0);
+        update_flag_out2:out std_logic_vector(0 downto 0);
+        mem_op_out:out std_logic_vector(0 downto 0);
+        wb_1_out:out std_logic_vector(0 downto 0);
+        wb_2_out:out std_logic_vector(0 downto 0);
+        is_branch_out:out std_logic_vector(0 downto 0);
+        immd1_out:out shiftamount_t;
+	    immd2_out:out shiftamount_t;
+	    pc_out:out std_logic_vector(2*n_word-1 downto 0):=(others=>'0');
         clk:in std_logic;
         rst: in std_logic;
         stall:in std_logic:='0';
@@ -52,30 +65,12 @@ signal wb2:std_logic_vector(0 downto 0);
 signal wb1temp:std_logic;
 signal wb2temp:std_logic;
 signal ld_buff: std_logic;
-signal alu_op1_out:alufun_t;
-signal alu_op2_out:alufun_t;
-signal update_flag_out1:std_logic_vector(0 downto 0);
-signal update_flag_out2:std_logic_vector(0 downto 0);
-signal mem_op_out: std_logic_vector(0 downto 0);
-signal wb_1_out:std_logic_vector(0 downto 0);
-signal wb_2_out:std_logic_vector(0 downto 0);
 signal  is_branch_in: std_logic_vector(0 downto 0);
 signal  is_branch1: std_logic;
 signal  is_branch2: std_logic;
-signal  src1_add_out:regadr_t ;
-signal  dst1_add_out:regadr_t ;
-signal  src2_add_out:regadr_t ;
-signal  dst2_add_out:regadr_t ;
-signal  src1_val_out:std_logic_vector(n_word-1 downto 0);
-signal  dst1_val_out:std_logic_vector(n_word-1 downto 0);
-signal  src2_val_out:std_logic_vector(n_word-1 downto 0);
-signal  dst2_val_out:std_logic_vector(n_word-1 downto 0);
 signal pc_temp:std_logic_vector(2*n_word-1 downto 0):=(others=>'0');
-signal pc_out:std_logic_vector(2*n_word-1 downto 0):=(others=>'0');
-signal immd1_out:shiftamount_t;
-signal immd2_out:shiftamount_t;
 signal immd_loadval:std_logic_vector(n_word-1 downto 0);
-signal  is_branch_out: std_logic_vector(0 downto 0);
+
        
 begin
 packet_decoder:entity processor.PacketDecode port map (        
@@ -138,7 +133,7 @@ regfile:entity processor.regfile
         clk,
         rst,
         pc_val,
-	pc_temp,
+	    pc_temp,
         immd_loadval
        
     );
@@ -179,7 +174,7 @@ decode_buffer: entity processor.Decode_Buffer
 generic map(n_word) 
 
 port map(  
-	alu_fun1,
+	    alu_fun1,
         alu_fun2,
         update_flag1,
         update_flag2,
@@ -215,11 +210,11 @@ port map(
         val_src1_out,
         val_dst2_out,
         val_src2_out,
-	immd1_out,
-	immd2_out,
-	pc_out,
+	    immd1_out,
+	    immd2_out,
+	    pc_out,
         clk,
-	ld_buff,
+	    ld_buff,
         rst
         
 
