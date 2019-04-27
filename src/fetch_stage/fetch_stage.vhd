@@ -14,7 +14,7 @@ port(
       
       inst1_out: out std_logic_vector(n_word-1 downto 0);
       inst2_out: out std_logic_vector(n_word-1 downto 0);
-
+      pc_out:out std_logic_vector(n_pc -1 downto 0);
       pc_immediate : in std_logic_vector(n_pc-1 downto 0) := (others => '0');
       normal_mode : in std_logic := '0';
       non_comp_mode: in std_logic := '0';
@@ -114,7 +114,7 @@ port map( inst1,
     );
 
 
-
+pc_out<=pc_addr_out;
 
 
 

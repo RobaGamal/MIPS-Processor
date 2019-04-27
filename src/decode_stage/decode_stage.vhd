@@ -136,7 +136,7 @@ regfile:entity processor.regfile
         clk,
         rst,
         pc_val,
-	    pc_temp,
+	pc_temp,
         immd_loadval
        
     );
