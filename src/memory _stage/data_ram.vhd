@@ -11,14 +11,12 @@ entity Ram is
     );
     port (
         clk: in std_logic;
-        rw: in std_logic;
-        memw_2word:in std_logic;
-        memr_2word:in std_logic;
+        rw: in std_logic_vector(2 downto 0);
         address: in std_logic_vector(n_address - 1 downto 0);
-        data_in: in std_logic_vector(n_reg_bits - 1 downto 0);
-        pc_in:in std_logic_vector(2*n_reg_bits-1 downto 0):=(others=>'0');
+        data_in: in std_logic_vector(2*n_reg_bits - 1 downto 0);
         data_out: out std_logic_vector(n_reg_bits - 1 downto 0);
-        pc_out: out std_logic_vector(2*n_reg_bits-1 downto 0):=(others=>'0')
+        pc_out:out std_logic_vector(2*n_reg_bits - 1 downto 0)
+   
     );
 end entity Ram;
 
@@ -29,29 +27,24 @@ begin
     process(clk) is
 	begin
 		if rising_edge(clk) then
-			if rw = '1' then
-				ram(to_integer(unsigned(address))) <= data_in;
+			if rw = "011" then
+			ram(to_integer(unsigned(address))) <= data_in(n_word-1 downto 0);
+            elsif rw ="100" then 
+            ram(to_integer(unsigned(address))) <= data_in(2*n_word-1 downto n_word);
+            ram(to_integer(unsigned(address)+1)) <= data_in(n_word-1 downto 0);
+
 			end if;
-            if memw_2word='1' then 
-            ram(to_integer(unsigned(address)))<= pc_in(2*n_word-1 downto n_word)
-            ram(to_integer(unsigned(address)+1)) <= pc_in(n_word-1 downto 0);
-			end if;
+
 		end if;
+
+    if rw = "001" then
+	data_out<= ram(to_integer(unsigned(address)));
+    elsif rw ="010" then 
+    pc_out <=ram(to_integer(unsigned(address)))&ram(to_integer(unsigned(address)+1));
+   
+    end if;
 	end process;
     
-     process(clk) is
-
-
-     if rising_edge(clk) then
-			
-            if memw_2word='1'
-             pc_out <=ram(to_integer(unsigned(address)))&ram(to_integer(unsigned(address)+1)));
-			end if;
-		end if;
-	end process;
-
-   data_out<=ram(to_integer(unsigned(address)));
-
-
+    
 
 end Ram_arch;

@@ -22,6 +22,7 @@ entity Decode_stage is
         update_flag_out1:out std_logic_vector(0 downto 0);
         update_flag_out2:out std_logic_vector(0 downto 0);
         mem_op_out:out std_logic_vector(2 downto 0);
+        mem_inst_no_out:out std_logic_vector(0 downto 0);
         wb_1_out:out std_logic_vector(0 downto 0);
         wb_2_out:out std_logic_vector(0 downto 0);
         is_branch_out:out std_logic_vector(0 downto 0);
@@ -61,6 +62,7 @@ signal update_flag2:std_logic_vector(0 downto 0);
 signal mem_fun1:std_logic_vector(2 downto 0);
 signal mem_fun2:std_logic_vector(2 downto 0);
 signal mem_op_in:std_logic_vector(2 downto 0);
+signal mem_inst_no:std_logic_vector(0 downto 0);
 signal wb1:std_logic_vector(0 downto 0);
 signal wb2:std_logic_vector(0 downto 0);
 signal wb1temp:std_logic;
@@ -139,6 +141,16 @@ regfile:entity processor.regfile
        
     );
 
+process(mem_fun1,mem_fun2)
+begin
+if(mem_fun1="000")then
+    mem_inst_no(0)<='1';
+elsif(mem_fun2="000")then
+    mem_inst_no(0)<='0';
+end if;
+end process;
+
+
 mem_op_in<=mem_fun1 or mem_fun2;
 ld_buff<= stall or ld;
 update_flag1(0)<=update_flag1_temp;
@@ -180,6 +192,7 @@ port map(
         update_flag1,
         update_flag2,
         mem_op_in,
+        mem_inst_no,
         wb1,
         wb2,
         is_branch_in,
@@ -200,6 +213,7 @@ port map(
         update_flag_out1,
         update_flag_out2,
         mem_op_out,
+        mem_inst_no_out,
         wb_1_out,
         wb_2_out,
         is_branch_out,

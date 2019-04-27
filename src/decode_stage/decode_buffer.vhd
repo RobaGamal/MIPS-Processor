@@ -14,6 +14,7 @@ port (  alu_op1_in: in  alufun_t;
         update_flag_in1: in std_logic_vector(0 downto 0);
         update_flag_in2: in  std_logic_vector(0 downto 0);
         mem_op_in:  in std_logic_vector(2 downto 0);
+        mem_inst_no_in:in std_logic_vector(0 downto 0);
         wb_1_in:in std_logic_vector(0 downto 0);
         wb_2_in:in std_logic_vector(0 downto 0);
         is_branch_in:in std_logic_vector(0 downto 0);
@@ -34,6 +35,7 @@ port (  alu_op1_in: in  alufun_t;
         update_flag_out1: out std_logic_vector(0 downto 0);
         update_flag_out2: out std_logic_vector(0 downto 0);
         mem_op_out: out std_logic_vector(2 downto 0);
+        mem_inst_no_out:out std_logic_vector(0 downto 0);
         wb_1_out:out  std_logic_vector(0 downto 0);
         wb_2_out:out std_logic_vector(0 downto 0);
         is_branch_out:out std_logic_vector(0 downto 0);
@@ -180,6 +182,12 @@ is_branch:entity processor.Reg
     generic map(1)
     port map(
       is_branch_in, is_branch_out,clk,ld, rst
+    );   
+
+mem_inst_no:entity processor.Reg 
+    generic map(1)
+    port map(
+      mem_inst_no_in, mem_inst_no_out,clk,ld, rst
     );   
 
 end Structural ;

@@ -1,0 +1,98 @@
+vsim processor.memory_stage
+mem load -i /home/ruba/Documents/uni/arch/project/MIPS-Processor/memory_files/data_mem/*.mem2 /memory_stage/data_ram/ram
+add wave -position insertpoint  \
+sim:/memory_stage/memrw \
+sim:/memory_stage/mem_inst_no \
+sim:/memory_stage/src1_add_in \
+sim:/memory_stage/dst1_add_in \
+sim:/memory_stage/src2_add_in \
+sim:/memory_stage/dst2_add_in \
+sim:/memory_stage/val_dst1_in \
+sim:/memory_stage/val_src1_in \
+sim:/memory_stage/val_dst2_in \
+sim:/memory_stage/val_src2_in \
+sim:/memory_stage/src1_add_out \
+sim:/memory_stage/dst1_add_out \
+sim:/memory_stage/src2_add_out \
+sim:/memory_stage/dst2_add_out \
+sim:/memory_stage/val_dst1_out \
+sim:/memory_stage/val_src1_out \
+sim:/memory_stage/val_dst2_out \
+sim:/memory_stage/val_src2_out \
+sim:/memory_stage/pc_out\
+sim:/memory_stage/clk
+force -freeze sim:/memory_stage/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/memory_stage/src1_add_in 1 0
+force -freeze sim:/memory_stage/dst1_add_in 2 0
+force -freeze sim:/memory_stage/src2_add_in 3 0
+force -freeze sim:/memory_stage/dst2_add_in 4 0
+
+force -freeze sim:/memory_stage/val_dst1_in 5 0
+force -freeze sim:/memory_stage/val_src1_in 6 0
+force -freeze sim:/memory_stage/val_src2_in 7 0
+force -freeze sim:/memory_stage/val_dst2_in 8 0
+
+
+force -freeze sim:/memory_stage/memrw 000 0
+force -freeze sim:/memory_stage/mem_inst_no 0 0
+
+run 100
+run 100
+
+force -freeze sim:/memory_stage/memrw 000 0
+force -freeze sim:/memory_stage/mem_inst_no 1 0
+
+run 100
+run 100
+
+
+force -freeze sim:/memory_stage/memrw 001 0
+force -freeze sim:/memory_stage/mem_inst_no 0 0
+
+run 100
+run 100
+
+force -freeze sim:/memory_stage/memrw 001 0
+force -freeze sim:/memory_stage/mem_inst_no 1 0
+
+
+run 100
+run 100
+
+force -freeze sim:/memory_stage/memrw 010 0
+force -freeze sim:/memory_stage/mem_inst_no 0 0
+
+run 100
+run 100
+
+force -freeze sim:/memory_stage/memrw 010 0
+force -freeze sim:/memory_stage/mem_inst_no 1 0
+
+run 100
+run 100
+
+force -freeze sim:/memory_stage/memrw 011 0
+force -freeze sim:/memory_stage/mem_inst_no 0 0
+
+run 100
+run 100
+
+force -freeze sim:/memory_stage/memrw 011 0
+force -freeze sim:/memory_stage/mem_inst_no 1 0
+
+run 100
+run 100
+
+
+force -freeze sim:/memory_stage/memrw 100 0
+force -freeze sim:/memory_stage/mem_inst_no 0 0
+
+run 100
+run 100
+
+
+force -freeze sim:/memory_stage/memrw 100 0
+force -freeze sim:/memory_stage/mem_inst_no 1 0
+
+run 100
+run 100

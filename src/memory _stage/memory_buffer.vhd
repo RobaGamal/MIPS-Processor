@@ -17,9 +17,9 @@ port (
         src2_add_in:in regadr_t ;
         dst2_add_in:in regadr_t ;
         src1_val_in:in std_logic_vector(n_word-1 downto 0);
-        dst1_val_in:in std_logic_vector(2*n_word-1 downto 0);
+        dst1_val_in:in std_logic_vector(n_word-1 downto 0);
         src2_val_in:in std_logic_vector(n_word-1 downto 0);
-        dst2_val_in:in std_logic_vector(2*n_word-1 downto 0);
+        dst2_val_in:in std_logic_vector(n_word-1 downto 0);
 	   
       
         wb_1_out:out std_logic_vector(0 downto 0);
@@ -29,9 +29,9 @@ port (
         src2_add_out:out regadr_t ;
         dst2_add_out:out regadr_t ;
         src1_val_out:out std_logic_vector(n_word-1 downto 0);
-        dst1_val_out:out std_logic_vector(2*n_word-1 downto 0);
+        dst1_val_out:out std_logic_vector(n_word-1 downto 0);
         src2_val_out:out std_logic_vector(n_word-1 downto 0);
-        dst2_val_out:out std_logic_vector(2*n_word-1 downto 0);
+        dst2_val_out:out std_logic_vector(n_word-1 downto 0);
        
         clk: in std_logic;
         ld:in std_logic:='1';
@@ -42,7 +42,7 @@ port (
 
 end Memory_Buffer ;
 
-Architecture Structural of Memory_Bufferr is
+Architecture Structural of Memory_Buffer is
 begin
 
 
@@ -91,7 +91,7 @@ reg7:  entity processor.Reg
     );  
 
 reg8:  entity processor.Reg 
-    generic map(2*n)
+    generic map(n)
     port map(
       dst1_val_in, dst1_val_out,clk,ld, rst
     );     
@@ -103,7 +103,7 @@ reg9:  entity processor.Reg
     ); 
 
  reg10:  entity processor.Reg 
-    generic map(2*n)
+    generic map(n)
     port map(
       dst2_val_in, dst2_val_out,clk,ld, rst
     );     
