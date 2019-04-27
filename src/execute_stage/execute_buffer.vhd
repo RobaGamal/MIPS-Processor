@@ -30,9 +30,9 @@ port (
         src2_add_out:out regadr_t ;
         dst2_add_out:out regadr_t ;
         src1_val_out:out std_logic_vector(n_word-1 downto 0);
-        dst1_val_out:out std_logic_vector(n_word-1 downto 0);
+        dst1_val_out:out std_logic_vector(2*n_word-1 downto 0);
         src2_val_out:out std_logic_vector(n_word-1 downto 0);
-        dst2_val_out:out std_logic_vector(n_word-1 downto 0);
+        dst2_val_out:out std_logic_vector(2*n_word-1 downto 0);
        
         clk: in std_logic;
         ld:in std_logic:='1';

@@ -6,8 +6,8 @@ use processor.config.all;
 entity sign_extend is
 generic (n : natural := n_word );
 port(
-     input: in std_logic_vector(n-1 downto 0);
-     output:out std_logic_vector(2*n-1 downto 0)
+     input_signal: in std_logic_vector(n-1 downto 0);
+     output_signal:out std_logic_vector(2*n-1 downto 0)
 
 );
 
@@ -19,8 +19,7 @@ signal extend: std_logic_vector(n-1 downto 0);
 
 begin
 extend<=(others=>'0');
-output<= extend&input;
-
+output_signal <= extend  & input_signal;
 
 
 

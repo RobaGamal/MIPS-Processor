@@ -8,6 +8,7 @@ entity ALU is
 	port(
 		a : in word_t := (others => '0');
 		b : in word_t := (others => '0');
+		shift:in shiftamount_t;
 		fun : in alufun_t := alu_first_op;
 		s : out word_t := (others => '0');
 		z_flag : out std_logic;
@@ -20,7 +21,9 @@ architecture Behavioral of ALU is
 signal a_tmp : unsigned(n_word downto 0);
 signal b_tmp : unsigned(n_word downto 0);
 signal s_tmp : unsigned(n_word downto 0);
+signal shift_tmp:unsigned(n_shiftamout-1 downto 0);
 begin
+    shift_tmp<=unsigned(shift);
 	a_tmp <= unsigned('0' & a);
 	b_tmp <= unsigned('0' & b);
 	s_tmp <=	a_tmp + b_tmp	when 	fun = alu_add else
@@ -31,8 +34,8 @@ begin
 				a_tmp or b_tmp	when	fun = alu_or  else
 				a_tmp 			when	fun = alu_first_op else
 				not(a_tmp)		when	fun = alu_not else
-				shift_left(a_tmp, to_integer(b_tmp)) when fun = alu_shl else
-				shift_right(a_tmp, to_integer(b_tmp)) when fun = alu_shr;
+				shift_left(a_tmp, to_integer(shift_tmp)) when fun = alu_shl else
+				shift_right(a_tmp, to_integer(shift_tmp)) when fun = alu_shr;
 
 	s <= std_logic_vector(s_tmp(n_word-1 downto 0));
 	

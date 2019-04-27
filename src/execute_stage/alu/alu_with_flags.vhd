@@ -8,6 +8,8 @@ entity ALUWithFlags is
 	port(
 		a : in word_t := (others => '0');
         b : in word_t := (others => '0');
+        shift1: in shiftamount_t;
+        shift2: in shiftamount_t;
         fun1 : in alufun_t := alu_first_op;
         update_flag1 : in std_logic := '0';
         c : in word_t := (others => '0');
@@ -54,12 +56,12 @@ constant n_flag_idx : integer := 2;
 begin
     alu1 : entity processor.ALU 
         port map(
-            a, b, fun1, s1,
+            a, b,shift1, fun1, s1,
             z_flag1_tmp, n_flag1_tmp, c_flag1_tmp 
         );
     alu2 : entity processor.ALU 
         port map(
-            c, d, fun2, s2,
+            c, d,shift2, fun2, s2,
             z_flag2_tmp, n_flag2_tmp, c_flag2_tmp 
         );
       

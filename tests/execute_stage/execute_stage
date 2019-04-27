@@ -1,0 +1,108 @@
+vsim processor.execute_stage
+add wave -position insertpoint  \
+sim:/execute_stage/src1_add_in \
+sim:/execute_stage/dst1_add_in \
+sim:/execute_stage/src2_add_in \
+sim:/execute_stage/dst2_add_in \
+sim:/execute_stage/val_dst1_in \
+sim:/execute_stage/val_src1_in \
+sim:/execute_stage/val_dst2_in \
+sim:/execute_stage/val_src2_in \
+sim:/execute_stage/alu_op1_in \
+sim:/execute_stage/alu_op2_in \
+sim:/execute_stage/update_flag_in1 \
+sim:/execute_stage/update_flag_in2 \
+sim:/execute_stage/mem_op_in \
+sim:/execute_stage/wb_1_in \
+sim:/execute_stage/wb_2_in \
+sim:/execute_stage/is_branch_in \
+sim:/execute_stage/immd1_in \
+sim:/execute_stage/immd2_in \
+sim:/execute_stage/pc_in
+add wave -position insertpoint  \
+sim:/execute_stage/mem_op_out \
+sim:/execute_stage/wb_1_out \
+sim:/execute_stage/wb_2_out \
+sim:/execute_stage/src1_add_out \
+sim:/execute_stage/dst1_add_out \
+sim:/execute_stage/src2_add_out \
+sim:/execute_stage/dst2_add_out \
+sim:/execute_stage/val_dst1_out \
+sim:/execute_stage/val_src1_out \
+sim:/execute_stage/val_dst2_out \
+sim:/execute_stage/val_src2_out \
+sim:/execute_stage/clk
+add wave -position insertpoint  \
+sim:/execute_stage/z_flag \
+sim:/execute_stage/n_flag \
+sim:/execute_stage/c_flag
+
+force -freeze sim:/execute_stage/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/execute_stage/src1_add_in 1 0
+force -freeze sim:/execute_stage/dst1_add_in 2 0
+force -freeze sim:/execute_stage/src2_add_in 3 0
+force -freeze sim:/execute_stage/dst2_add_in 4 0
+
+force -freeze sim:/execute_stage/val_dst1_in 12 0
+force -freeze sim:/execute_stage/val_src1_in 4 0
+
+force -freeze sim:/execute_stage/val_dst2_in 10 0
+force -freeze sim:/execute_stage/val_src2_in 5 0
+
+
+force -freeze sim:/execute_stage/alu_op1_in 0 0
+force -freeze sim:/execute_stage/alu_op2_in 0 0
+
+
+force -freeze sim:/execute_stage/update_flag_in1 0 0
+force -freeze sim:/execute_stage/update_flag_in2 0 0
+
+force -freeze sim:/execute_stage/mem_op_in 0 0
+
+force -freeze sim:/execute_stage/wb_1_in 1 0
+force -freeze sim:/execute_stage/wb_2_in 1 0
+
+run 100
+run 100
+force -freeze sim:/execute_stage/immd1_in 1 0
+force -freeze sim:/execute_stage/immd2_in 1 0
+
+force -freeze sim:/execute_stage/val_dst1_in 4 0
+force -freeze sim:/execute_stage/val_src1_in 2 0
+
+force -freeze sim:/execute_stage/val_dst2_in 8 0
+force -freeze sim:/execute_stage/val_src2_in 4 0
+
+
+force -freeze sim:/execute_stage/alu_op1_in 8 0
+force -freeze sim:/execute_stage/alu_op2_in 8 0
+
+
+run 100
+run 100
+
+force -freeze sim:/execute_stage/src1_add_in 1 0
+force -freeze sim:/execute_stage/dst1_add_in 2 0
+force -freeze sim:/execute_stage/src2_add_in 3 0
+force -freeze sim:/execute_stage/dst2_add_in 8 0
+
+force -freeze sim:/execute_stage/val_dst1_in 12 0
+force -freeze sim:/execute_stage/val_src1_in 4 0
+
+
+force -freeze sim:/execute_stage/val_dst2_in 0 0
+force -freeze sim:/execute_stage/val_src2_in 8 0
+
+force -freeze sim:/execute_stage/alu_op1_in 0 0
+force -freeze sim:/execute_stage/alu_op2_in 9 0
+
+
+force -freeze sim:/execute_stage/pc_in 20 0
+
+run 100
+run 100
+
+force -freeze sim:/execute_stage/alu_op2_in 10 0
+run 100
+run 100
+

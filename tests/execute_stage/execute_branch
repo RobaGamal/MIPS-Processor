@@ -1,0 +1,15 @@
+vsim processor.execute_stage
+add wave -position insertpoint  \
+sim:/execute_stage/val_dst1_in \
+sim:/execute_stage/is_branch_in \
+sim:/execute_stage/is_branch_out \
+sim:/execute_stage/load_address\
+add wave -position insertpoint  \
+sim:/execute_stage/clk
+force -freeze sim:/execute_stage/val_dst1_in 3 0
+force -freeze sim:/execute_stage/is_branch_in 1 0
+force -freeze sim:/execute_stage/alu_op1_in 9 0
+
+force -freeze sim:/execute_stage/clk 1 0, 0 {50 ps} -r 100
+run 100
+
