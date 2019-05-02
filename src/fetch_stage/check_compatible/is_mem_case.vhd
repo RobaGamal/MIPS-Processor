@@ -16,9 +16,9 @@ architecture Behavioral of IsMemCase is
 begin
     process(opcode1,opcode2)
     begin
-        if (opcode1 = op_ldm or opcode1 = op_std or
+        if (opcode1 = op_ldd or opcode1 = op_std or
                 opcode1 = op_in or opcode1 = op_out) and
-                (opcode2 = op_ldm or opcode2 = op_std or 
+                (opcode2 = op_ldd or opcode2 = op_std or 
                 opcode2 = op_in or opcode2 = op_out) then
             is_mem_case <= '1';
         else

@@ -22,8 +22,7 @@ architecture Structural of CheckCompatible is
     signal is_mem_case : std_logic;
     signal is_load_use : std_logic;
     signal is_port_case : std_logic;
-    signal is_lone_inst1 : std_logic;
-    signal is_lone_inst2 : std_logic;
+    signal is_lone_inst : std_logic;
 begin
     is_mem_case_gen : entity processor.IsMemCase 
     port map (
@@ -48,18 +47,13 @@ begin
         is_port_case => is_port_case
     );
     
-    is_lone_inst_gen1 : entity processor.IsLoneInst
+    is_lone_inst_gen : entity processor.IsLoneInst
     port map (
-        opcode => opcode1,
-        is_lone_inst => is_lone_inst1
+        opcode1 => opcode1,
+        opcode2 => opcode2,
+        is_lone_inst => is_lone_inst
     );
     
-    is_lone_inst_gen2 : entity processor.IsLoneInst
-    port map (
-        opcode => opcode2,
-        is_lone_inst => is_lone_inst2
-    );
-    
-    is_compatible <= not(is_mem_case or is_load_use or is_port_case or
-                    is_lone_inst1 or is_lone_inst2);
+    is_compatible <= not(is_mem_case or is_load_use or 
+                        is_port_case or is_lone_inst);
 end Structural;
