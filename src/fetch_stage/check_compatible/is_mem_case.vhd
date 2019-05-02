@@ -6,7 +6,6 @@ use processor.config.all;
 
 entity IsMemCase is
     port (        
-        -- instruction 1
         opcode1 : in opcode_t;
         opcode2 : in opcode_t;
         is_mem_case : out std_logic

@@ -7,6 +7,7 @@ use ieee.numeric_std.all;
 package config is
 	constant period : time := 100 ns;
 	constant n_word : natural := 16;
+	constant n_dword : natural := 32;
 	-- ALU Constants --
 	constant n_alufun : natural := 4;
 	subtype alufun_t is std_logic_vector(n_alufun - 1 downto 0);
@@ -60,18 +61,19 @@ package config is
 	constant op_reti : opcode_t := "10110";
 
 	-- registers
-	constant n_regadr : natural := 4;
+	constant n_regaddr : natural := 4;
 	constant n_register: natural := 8;
-	subtype regadr_t is std_logic_vector(n_regadr-1 downto 0);
-	constant gregadr_l : regadr_t := "0000";
-	constant gregadr_h : regadr_t := "0111";
-	constant pcregadr : regadr_t := "1000";
-	constant spregadr : regadr_t := "1001";
-	constant immregadr_l : regadr_t := "1010";
+	subtype regaddr_t is std_logic_vector(n_regaddr-1 downto 0);
+	constant gregaddr_l : regaddr_t := "0000";
+	constant gregaddr_h : regaddr_t := "0111";
+	constant pcregaddr : regaddr_t := "1000";
+	constant spregaddr : regaddr_t := "1001";
+	constant immregaddr_l : regaddr_t := "1010";
 	--constant n_shiftamout : natural := 4;
-        constant n_shiftamout : natural := 3;
+    constant n_shiftamout : natural := 3;
 	subtype shiftamount_t is std_logic_vector(n_shiftamout-1 downto 0);
 	subtype word_t is std_logic_vector(n_word-1 downto 0);
+	subtype dword_t is std_logic_vector(n_dword-1 downto 0);
 	type wordarr_t is array(integer range<>) of word_t;
 	type reg_vector is array (0 to 7) of std_logic_vector(n_word-1 downto 0);
 	  

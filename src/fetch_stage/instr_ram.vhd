@@ -1,23 +1,20 @@
 library ieee;
 library processor;
 use ieee.std_logic_1164.all;
-USE IEEE.numeric_std.all;
+USE ieee.numeric_std.all;
 use processor.config.all;
 
-ENTITY instr_ram IS
-        Generic ( n:integer:=16 );
-	PORT(
-		clk : IN std_logic;
-		address : IN  std_logic_vector(2*n-1 DOWNTO 0);
-		dataout : OUT std_logic_vector(2*n-1 DOWNTO 0));
-END ENTITY instr_ram;
+entity InstrRam is
+	port (
+		clk : in std_logic;
+		address : in  dword_t;
+		dataout : out dword_t
+	);
+end entity InstrRam;
 
-ARCHITECTURE syncrama OF instr_ram IS
-
-	TYPE ram_type IS ARRAY(0 TO (2**10-1)) OF std_logic_vector(n-1 DOWNTO 0);
-	SIGNAL ram : ram_type ;
-	
-	BEGIN
-		
-		dataout <= ram(to_integer(unsigned(address)))&ram(to_integer(unsigned(address)+1));
-END syncrama;
+architecture syncrama of InstrRam is
+	type ram_type is array(0 to (2**10-1)) of word_t;
+	signal ram : ram_type;
+begin
+	dataout <= ram(to_integer(unsigned(address))) & ram(to_integer(unsigned(address)+1));
+end syncrama;
