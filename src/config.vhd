@@ -60,6 +60,15 @@ package config is
 	constant op_ret : opcode_t := "10101";
 	constant op_reti : opcode_t := "10110";
 
+	-- Memory stage Constants --
+	constant n_memfun : natural := 3;
+	subtype memfun_t is std_logic_vector(n_memfun - 1 downto 0);
+	constant mem_nop : memfun_t := "000";
+	constant mem_read : memfun_t := "001";
+	constant mem_write : memfun_t := "010";
+	constant mem_in : memfun_t := "011";
+	constant mem_out : memfun_t := "100";
+
 	-- registers
 	constant n_regaddr : natural := 4;
 	constant n_register: natural := 8;
@@ -69,12 +78,13 @@ package config is
 	constant pcregaddr : regaddr_t := "1000";
 	constant spregaddr : regaddr_t := "1001";
 	constant immregaddr_l : regaddr_t := "1010";
-	--constant n_shiftamout : natural := 4;
-    constant n_shiftamout : natural := 3;
-	subtype shiftamount_t is std_logic_vector(n_shiftamout-1 downto 0);
+	--constant n_shiftamount : natural := 4;
+    constant n_shiftamount : natural := 3;
+	subtype shiftamount_t is std_logic_vector(n_shiftamount-1 downto 0);
 	subtype word_t is std_logic_vector(n_word-1 downto 0);
 	subtype dword_t is std_logic_vector(n_dword-1 downto 0);
 	type wordarr_t is array(integer range<>) of word_t;
-	type reg_vector is array (0 to 7) of std_logic_vector(n_word-1 downto 0);
+	type dwordarr_t is array(integer range<>) of word_t;
+	type reg_vector is array (0 to 15) of dword_t;
 	  
 end package;
