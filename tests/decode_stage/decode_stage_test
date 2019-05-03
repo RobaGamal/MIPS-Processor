@@ -1,56 +1,28 @@
 vsim processor.decode_stage
 add wave -position insertpoint  \
-sim:/decode_stage/inst1 \
-sim:/decode_stage/inst2 \
-sim:/decode_stage/val_dst1_out \
-sim:/decode_stage/val_src1_out \
-sim:/decode_stage/val_dst2_out \
-sim:/decode_stage/val_src2_out \
-sim:/decode_stage/clk \
-sim:/decode_stage/rst \
-sim:/decode_stage/stall \
-sim:/decode_stage/ld \
-sim:/decode_stage/src1_addr \
-sim:/decode_stage/dest1_addr \
-sim:/decode_stage/src2_addr \
-sim:/decode_stage/dest2_addr \
-sim:/decode_stage/val_dst1_out_temp \
-sim:/decode_stage/val_src1_out_temp \
-sim:/decode_stage/val_dst2_out_temp \
-sim:/decode_stage/val_src2_out_temp \
-sim:/decode_stage/opcode1 \
-sim:/decode_stage/imm1 \
-sim:/decode_stage/opcode2 \
-sim:/decode_stage/imm2 \
-sim:/decode_stage/alu_fun1 \
-sim:/decode_stage/alu_fun2 \
-sim:/decode_stage/update_flag1_temp \
-sim:/decode_stage/update_flag2_temp \
-sim:/decode_stage/update_flag1 \
-sim:/decode_stage/update_flag2 \
-sim:/decode_stage/mem_fun1 \
-sim:/decode_stage/mem_fun2 \
-sim:/decode_stage/mem_op_in \
-sim:/decode_stage/wb1 \
-sim:/decode_stage/wb2 \
-sim:/decode_stage/wb1temp \
-sim:/decode_stage/wb2temp \
-sim:/decode_stage/ld_buff \
-sim:/decode_stage/alu_op1_out \
-sim:/decode_stage/alu_op2_out \
-sim:/decode_stage/update_flag_out1 \
-sim:/decode_stage/update_flag_out2 \
-sim:/decode_stage/mem_op_out \
-sim:/decode_stage/wb_1_out \
-sim:/decode_stage/wb_2_out \
-sim:/decode_stage/src1_add_out \
-sim:/decode_stage/dst1_add_out \
-sim:/decode_stage/src2_add_out \
-sim:/decode_stage/dst2_add_out \
-sim:/decode_stage/pc_temp \
-sim:/decode_stage/pc_out \
+sim:/decodestage/pc_val \
+sim:/decodestage/src1_addr_out \
+sim:/decodestage/val_src1_out \
+sim:/decodestage/dst1_addr_out \
+sim:/decodestage/val_dst1_out \
+sim:/decodestage/src2_addr_out \
+sim:/decodestage/val_src2_out \
+sim:/decodestage/dst2_addr_out \
+sim:/decodestage/val_dst2_out \
+sim:/decodestage/alu_op1_out \
+sim:/decodestage/update_flag_out1 \
+sim:/decodestage/alu_op2_out \
+sim:/decodestage/update_flag_out2 \
+sim:/decodestage/is_branch1_out \
+sim:/decodestage/is_branch2_out \
+sim:/decodestage/immd1_out \
+sim:/decodestage/immd2_out \
+sim:/decodestage/mem_fun_out \
+sim:/decodestage/mem_inst_no_out \
+sim:/decodestage/wb_1_out \
+sim:/decodestage/wb_2_out
 
-force -freeze sim:/decode_stage/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/decodestage/clk 1 0, 0 {50 ps} -r 100
 
 force -freeze sim:/regfile/reg_loop(0)/reg/d 2 0
 force -freeze sim:/regfile/l_arr 1 0
@@ -69,7 +41,7 @@ force -freeze sim:/regfile/reg_loop(4)/reg/d 10 0
 force -freeze sim:/regfile/l_arr 16 0
 run 100
 
-force -freeze sim:/decode_stage/inst1 22672 0
-force -freeze sim:/decode_stage/inst2 22944 0
+force -freeze sim:/decodestage/inst1 22672 0
+force -freeze sim:/decodestage/inst1 22944 0
 run 100
 run 100
