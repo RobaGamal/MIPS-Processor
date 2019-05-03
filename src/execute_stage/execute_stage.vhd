@@ -23,7 +23,6 @@ entity Execute_stage is
         mem_inst_no_in:in std_logic;
         wb_1_in:in std_logic ;
         wb_2_in:in std_logic ;
-        is_branch_in:in std_logic;
         immd1_in:in shiftamount_t;
 	    immd2_in:in shiftamount_t;
 	   
@@ -41,7 +40,6 @@ entity Execute_stage is
         val_src1_out:out dword_t;
         val_dst2_out:out dword_t;
         val_src2_out:out dword_t;
-        is_branch_out:out std_logic;
         load_address:out dword_t:=(others=>'0');
         clk:in std_logic;
         rst: in std_logic;
@@ -121,7 +119,7 @@ execute_buffer: entity processor.Execute_Buffer
 
 port map(  
         mem_op_temp,
-	mem_inst_no_in,
+	    mem_inst_no_in,
         wb_1_in,
         wb_2_in,
         src1_add_in,

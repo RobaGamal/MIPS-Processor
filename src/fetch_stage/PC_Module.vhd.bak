@@ -11,7 +11,7 @@ entity PCModule is
 		excep_mode : in std_logic := '0';
 		branch_mode : in std_logic := '0';
 		load_address : in dword_t := (others => '0');
-		ld:in std_logic:='1';
+		ld:in std_logic:=clk;
 		clk, rst : in std_logic := '0';
 		pc_addr_out : out dword_t
 	);

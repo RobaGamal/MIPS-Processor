@@ -50,7 +50,7 @@ begin
 		excep_mode => excep_mode,
 		branch_mode => branch_mode,
 		load_address => load_address,
-		ld => '1',
+		ld => clk,
 		clk => clk,
 		rst => rst,
 		pc_addr_out => pc_addr_out
@@ -106,7 +106,7 @@ begin
 		out1 => inst1_out,
 		out2 => inst2_out,
 		clk => clk,
-		ld => '1',
+		ld => clk,
 		rst => rst
 	);
 	pc_out <= pc_addr_out;

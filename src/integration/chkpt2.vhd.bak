@@ -58,6 +58,21 @@ signal addr2_write :regaddr_t ;
 signal ld2_write :std_logic;
 signal val2_write :dword_t;
 
+signal mem_func_out_ex:std_logic_vector(2 downto 0);
+signal mem_inst_no_out_ex:std_logic;
+signal wb_1_out_ex:std_logic;
+signal wb_2_out_ex:std_logic;
+signal src1_add_out_ex:regaddr_t ;
+signal dst1_add_out_ex:regaddr_t ;
+signal src2_add_out_ex:regaddr_t ;
+signal dst2_add_out_ex:regaddr_t ;
+
+signal val_dst1_out_ex: dword_t;
+signal val_src1_out_ex: dword_t;
+signal val_dst2_out_ex: dword_t;
+signal val_src2_out_ex: dword_t;
+
+
 begin 
 fetch_stage:entity processor .FetchStage
 port map (
@@ -122,7 +137,51 @@ decode_stage:entity processor. DecodeStage
 
 
 
+    execute_stage:entity processor.Execute_stage 
+    port map(   
+        src1_add_in=>src1_add_out,
+        dst1_add_in=>dst1_add_out ,
+        src2_add_in=>src2_add_out,
+        dst2_add_in=>dst1_add_out ,
+        val_dst1_in=>val_dst1_out,
+        val_src1_in=>val_src1_out,
+        val_dst2_in=>val_dst2_out,
+        val_src2_in=>val_src2_out,
+        alu_op1_in=>alu_op1_out,
+        alu_op2_in=>alu_op1_out,
+        branch_op1=>is_branch1_out ,
+        branch_op2=>is_branch2_out ,
+        update_flag_in1=>update_flag_out1,
+        update_flag_in2=>update_flag_out1 ,
+        mem_op_in=>mem_fun_out,
+        mem_inst_no_in=>mem_inst_no_out,
+        wb_1_in=>wb_1_out ,
+        wb_2_in=>wb_2_out ,
+        immd1_in=>immd1_out,
+	immd2_in=>immd2_out,
+	   
+        
+        
+        mem_op_out=>mem_func_out_ex,
+        mem_inst_no_out=>mem_inst_no_out_ex,
+        wb_1_out=>wb_1_out_ex,
+        wb_2_out=>wb_2_out_ex,
+        src1_add_out=>src1_add_out_ex,
+        dst1_add_out=>dst1_add_out_ex,
+        src2_add_out=>src2_add_out_ex ,
+        dst2_add_out=>dst2_add_out_ex,
+        val_dst1_out=>val_dst1_out_ex,
+        val_src1_out=>val_src1_out_ex,
+        val_dst2_out=>val_dst2_out_ex,
+        val_src2_out=>val_src2_out_ex,
+        load_address=>jump_address,
+        clk=>clk,
+        rst=>rst,
+        stall=>stall,
+        ld=>'1'
 
+
+    );
 
 
 
