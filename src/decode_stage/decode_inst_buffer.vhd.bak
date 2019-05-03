@@ -60,7 +60,7 @@ begin
 	port map (
 	   signals_in, signals_out, clk, ld, rst
 	);
-	update_flag_out <= signals_out(1);
+	update_flag_out <= signals_out(2);
 	wb_out <= signals_out(0);
 
 	reg10:  entity processor.Reg

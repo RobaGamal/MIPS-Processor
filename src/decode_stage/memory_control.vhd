@@ -21,9 +21,9 @@ begin
 		elsif opcode = op_std then
 			mem_fun <= mem_write;
 		elsif opcode = op_out then
-			mem_fun <= mem_out;
+			mem_fun <= mem_read;
 		elsif opcode = op_in then
-			mem_fun <= mem_in;
+			mem_fun <= mem_read;
 		end if;
 	end process;
 end Behavioral;

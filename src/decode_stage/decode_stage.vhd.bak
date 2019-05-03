@@ -73,8 +73,8 @@ Architecture Structural of DecodeStage is
 	signal wb1:std_logic;
 	signal wb2:std_logic;
 	signal ld_buff: std_logic;
-	signal  is_branch1: std_logic_vector(2 downto 0);
-	signal  is_branch2: std_logic_vector(2 downto 0);
+	signal  is_branch1: std_logic;
+	signal  is_branch2: std_logic;
 	
 begin
 packet_decoder:entity processor.PacketDecode port map (

@@ -66,8 +66,8 @@ package config is
 	constant mem_nop : memfun_t := "000";
 	constant mem_read : memfun_t := "001";
 	constant mem_write : memfun_t := "010";
-	constant mem_in : memfun_t := "011";
-	constant mem_out : memfun_t := "100";
+	constant mem_readw : memfun_t := "011";
+	constant mem_writew : memfun_t := "100";
 
 	-- registers
 	constant n_regaddr : natural := 4;

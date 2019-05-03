@@ -9,7 +9,7 @@ entity Decode_Buffer is
 		alu_op1_in : in  alufun_t;
 		update_flag1_in : in std_logic;
 		wb1_in : in std_logic;
-		is_branch1_in : in std_logic;
+		is_branch1_in : in std_logic_vector(2 downto 0);
 		immd1_in : in shiftamount_t;
 		src_addr1_in : in regaddr_t;
 		dst_addr1_in : in regaddr_t;
@@ -19,7 +19,7 @@ entity Decode_Buffer is
         alu_op2_in : in  alufun_t;
 		update_flag2_in : in std_logic;
 		wb2_in : in std_logic;
-		is_branch2_in : in std_logic;
+		is_branch2_in : in std_logic_vector(2 downto 0);
 		immd2_in : in shiftamount_t;
 		src_addr2_in : in regaddr_t;
 		dst_addr2_in : in regaddr_t;
@@ -32,7 +32,7 @@ entity Decode_Buffer is
 		alu_op1_out : out  alufun_t;
 		update_flag1_out : out std_logic;
 		wb1_out : out  std_logic;
-		is_branch1_out : out std_logic;
+		is_branch1_out : out std_logic_vector(2 downto 0);
 		src_addr1_out : out regaddr_t ;
 		dst_addr1_out:out regaddr_t ;
 		src_val1_out:out dword_t;
@@ -42,7 +42,7 @@ entity Decode_Buffer is
         alu_op2_out : out  alufun_t;
 		update_flag2_out : out std_logic;
 		wb2_out : out  std_logic;
-		is_branch2_out : out std_logic;
+		is_branch2_out : out std_logic_vector(2 downto 0);
 		src_addr2_out : out regaddr_t ;
 		dst_addr2_out:out regaddr_t ;
 		src_val2_out:out dword_t;

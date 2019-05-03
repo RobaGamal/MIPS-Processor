@@ -6,20 +6,20 @@ use processor.config.all;
 
 entity ALUWithFlags is
 	port(
-		a : in word_t := (others => '0');
-        b : in word_t := (others => '0');
+		a : in dword_t := (others => '0');
+        b : in dword_t := (others => '0');
         shift1: in shiftamount_t;
         shift2: in shiftamount_t;
         fun1 : in alufun_t := alu_first_op;
         update_flag1 : in std_logic := '0';
-        c : in word_t := (others => '0');
-		d : in word_t := (others => '0');
+        c : in dword_t := (others => '0');
+		d : in dword_t := (others => '0');
 		fun2 : in alufun_t := alu_first_op;
         update_flag2 : in std_logic := '0';
         clk : in std_logic := '0';
         reset : in std_logic := '0';
-        s1 : out word_t := (others => '0');
-        s2 : out word_t := (others => '0');
+        s1 : out dword_t := (others => '0');
+        s2 : out dword_t := (others => '0');
         z_flag : out std_logic;
 		n_flag : out std_logic;
 		c_flag : out std_logic

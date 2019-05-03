@@ -97,7 +97,6 @@ force -freeze sim:/execute_stage/alu_op1_in 0 0
 force -freeze sim:/execute_stage/alu_op2_in 9 0
 
 
-force -freeze sim:/execute_stage/pc_in 20 0
 
 run 100
 run 100

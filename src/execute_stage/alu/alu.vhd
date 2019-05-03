@@ -6,11 +6,11 @@ use processor.config.all;
 
 entity ALU is
 	port(
-		a : in word_t := (others => '0');
-		b : in word_t := (others => '0');
+		a : in dword_t := (others => '0');
+		b : in dword_t := (others => '0');
 		shift:in shiftamount_t;
 		fun : in alufun_t := alu_first_op;
-		s : out word_t := (others => '0');
+		s : out dword_t := (others => '0');
 		z_flag : out std_logic;
 		n_flag : out std_logic;
 		c_flag : out std_logic
@@ -18,10 +18,10 @@ entity ALU is
 end ALU;
 
 architecture Behavioral of ALU is
-signal a_tmp : unsigned(n_word downto 0);
-signal b_tmp : unsigned(n_word downto 0);
-signal s_tmp : unsigned(n_word downto 0);
-signal shift_tmp:unsigned(n_shiftamout-1 downto 0);
+signal a_tmp : unsigned(2*n_word downto 0);
+signal b_tmp : unsigned(2*n_word downto 0);
+signal s_tmp : unsigned(2*n_word downto 0);
+signal shift_tmp:unsigned(n_shiftamount-1 downto 0);
 begin
     shift_tmp<=unsigned(shift);
 	a_tmp <= unsigned('0' & a);
@@ -37,7 +37,7 @@ begin
 				shift_left(a_tmp, to_integer(shift_tmp)) when fun = alu_shl else
 				shift_right(a_tmp, to_integer(shift_tmp)) when fun = alu_shr;
 
-	s <= std_logic_vector(s_tmp(n_word-1 downto 0));
+	s <= std_logic_vector(s_tmp(2*n_word-1 downto 0));
 	
 	z_flag <= '1' when s_tmp(n_word-1 downto 0) = 0 else '0';
 	n_flag <= s_tmp(n_word-1);

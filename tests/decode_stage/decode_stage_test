@@ -1,4 +1,4 @@
-vsim processor.decode_stage
+vsim processor.decodestage
 add wave -position insertpoint  \
 sim:/decodestage/pc_val \
 sim:/decodestage/src1_addr_out \
@@ -42,6 +42,6 @@ force -freeze sim:/regfile/l_arr 16 0
 run 100
 
 force -freeze sim:/decodestage/inst1 22672 0
-force -freeze sim:/decodestage/inst1 22944 0
+force -freeze sim:/decodestage/inst2 22944 0
 run 100
 run 100
