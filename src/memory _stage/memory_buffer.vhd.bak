@@ -85,7 +85,7 @@ reg4:  entity processor.Reg
     );   
 
 reg7:  entity processor.Reg 
-    generic map(2*n)
+    generic map(n)
     port map(
        src1_val_in, src1_val_out,clk,ld, rst
     );  

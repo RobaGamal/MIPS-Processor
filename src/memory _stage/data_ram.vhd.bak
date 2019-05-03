@@ -13,7 +13,7 @@ entity Ram is
         clk: in std_logic;
         rw: in std_logic_vector(2 downto 0);
         address: in std_logic_vector(n_address - 1 downto 0);
-        data_in: in dword_t;
+        data_in: in dword_t);
         data_out: out dword_t
        
    

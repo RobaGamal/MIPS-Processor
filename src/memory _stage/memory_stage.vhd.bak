@@ -59,7 +59,9 @@ ld_buff<= ld and  not(stall) ;
 
 
 data_ram:entity processor.Ram 
-    generic map (n_word)
+    generic map (n_word,n_word
+       
+    )
     port map(
         clk,
         memrw,
