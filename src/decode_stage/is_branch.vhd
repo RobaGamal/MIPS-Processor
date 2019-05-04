@@ -22,8 +22,6 @@ begin
 			is_branch <= "010";
 		elsif opcode = op_jc then
 			is_branch <= "011";
-		elsif opcode = op_jmp then
-			is_branch <= "100";
 		end if;
 	end process;
 end Behavioral;

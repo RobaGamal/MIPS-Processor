@@ -40,6 +40,10 @@ entity DecodeStage is
 		addr2_write : in regaddr_t;
 		ld2_write : in std_logic;
 		val2_write : in dword_t;
+		-- Branch output (useful for CALL, 3rd inst is JMP)
+		-- decoder executes JMP branches only
+		is_branch : out std_logic;
+		load_address : out dword_t;
 		--General 
 		clk : in std_logic;
 		rst : in std_logic;
@@ -174,6 +178,16 @@ begin
 		val2_write=> val2_write,
 		clk=>clk,
 		rst=>rst	
+	);
+
+	jumper: entity processor.DirectJumper
+	port map (
+		-- input
+		opcode1_in => opcode1_cb, dst_val1_in => val_dst1_out_temp,
+		opcode2_in => opcode2_cb, dst_val2_in => val_dst2_out_temp,
+		opcode3_in => opcode3_cb, dst_val3_in => val_dst1_out_temp,
+		-- output
+		is_branch => is_branch, load_address => load_address
 	);
 
 	process(mem_fun1,mem_fun2)
