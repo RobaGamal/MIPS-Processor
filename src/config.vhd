@@ -16,6 +16,8 @@ package config is
 	constant alu_sub : alufun_t := "0001";
 	constant alu_inc : alufun_t := "0010";
 	constant alu_dec : alufun_t := "0011";
+	constant alu_inc2 : alufun_t := "1101";
+	constant alu_dec2 : alufun_t := "1110";
 	-- logical
 	constant alu_and : alufun_t := "0100";
 	constant alu_or : alufun_t := "0101";
