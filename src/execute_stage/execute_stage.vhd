@@ -71,14 +71,14 @@ update_flag1<=update_flag_in1;
 update_flag2<=update_flag_in2;
 alu:entity processor.ALUWithFlags 
 	port map(
-		val_dst1_in ,
         val_src1_in ,
+		val_dst1_in ,
         immd1_in,
         immd2_in,
         alu_op1_in,
         update_flag1 ,
+        val_src2_in,
         val_dst2_in ,
-		val_src2_in,
 		alu_op2_in,
         update_flag2 ,
 

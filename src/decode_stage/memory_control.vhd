@@ -7,19 +7,29 @@ use processor.config.all;
 entity MemoryControl is
 	port (        
 		opcode : in opcode_t;
+		src_addr : in regaddr_t;
+		dst_addr : in regaddr_t;
 		mem_fun : out memfun_t
 	);
 end  MemoryControl;
 
 architecture Behavioral of  MemoryControl is
 begin
-	process(opcode)
+	process(opcode, src_addr, dst_addr)
 	begin
 		mem_fun <= mem_nop;
-		if opcode = op_ldd   then
-			mem_fun <= mem_read;
+		if opcode = op_ldd then
+			if dst_addr = pcregaddr or dst_addr = spregaddr then
+				mem_fun <= mem_readw;
+			else
+				mem_fun <= mem_read;
+			end if;
 		elsif opcode = op_std then
-			mem_fun <= mem_write;
+			if src_addr = pcregaddr or src_addr = spregaddr then
+				mem_fun <= mem_writew;
+			else
+				mem_fun <= mem_write;
+			end if;
 		elsif opcode = op_out then
 			mem_fun <= mem_read;
 		elsif opcode = op_in then

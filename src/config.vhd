@@ -16,6 +16,8 @@ package config is
 	constant alu_sub : alufun_t := "0001";
 	constant alu_inc : alufun_t := "0010";
 	constant alu_dec : alufun_t := "0011";
+	constant alu_inc2 : alufun_t := "1101";
+	constant alu_dec2 : alufun_t := "1110";
 	-- logical
 	constant alu_and : alufun_t := "0100";
 	constant alu_or : alufun_t := "0101";
@@ -59,7 +61,9 @@ package config is
 	constant op_call : opcode_t := "10100";
 	constant op_ret : opcode_t := "10101";
 	constant op_reti : opcode_t := "10110";
-
+	constant op_inc2 : opcode_t := "10111";
+	constant op_dec2 : opcode_t := "11000";
+	
 	-- Memory stage Constants --
 	constant n_memfun : natural := 3;
 	subtype memfun_t is std_logic_vector(n_memfun - 1 downto 0);
@@ -78,6 +82,7 @@ package config is
 	constant pcregaddr : regaddr_t := "1000";
 	constant spregaddr : regaddr_t := "1001";
 	constant immregaddr_l : regaddr_t := "1010";
+	constant notregaddr : regaddr_t := "1111";
 	--constant n_shiftamount : natural := 4;
     constant n_shiftamount : natural := 3;
 	subtype shiftamount_t is std_logic_vector(n_shiftamount-1 downto 0);

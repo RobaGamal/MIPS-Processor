@@ -18,7 +18,7 @@ begin
 	process(dst_addr,opcode)
 	begin
 		update_flag <= '1';
-		alu_fun <= alu_first_op;
+		alu_fun <= alu_second_op;
 		if opcode = op_setc  then
 			alu_fun <= alu_setc;
 		elsif opcode = op_clrc  then
@@ -29,8 +29,12 @@ begin
 			alu_fun <= alu_inc;
 		elsif opcode = op_dec  then
 			alu_fun <= alu_dec;
+		elsif opcode = op_inc2  then
+			alu_fun <= alu_inc2;
+		elsif opcode = op_dec2 then
+			alu_fun <= alu_dec2;
 		elsif opcode = op_mov  then
-			alu_fun <= alu_second_op;
+			alu_fun <= alu_first_op;
 		elsif opcode = op_add  then
 			alu_fun <= alu_add;
 		elsif opcode = op_sub  then
@@ -43,8 +47,6 @@ begin
 			alu_fun <= alu_shl;
 		elsif opcode = op_shr  then
 			alu_fun <= alu_shr;
-		elsif opcode = op_ldd  then
-			alu_fun <= alu_second_op;
 		end if;
 		if dst_addr = pcregaddr or dst_addr = spregaddr then
 			update_flag <= '0';
