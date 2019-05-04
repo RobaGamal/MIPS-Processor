@@ -29,7 +29,9 @@ entity ComplexBreaker is
 		-- output - third instruction
 		opcode3_out : out opcode_t;
 		src_addr3_out : out regaddr_t;
-		dst_addr3_out : out regaddr_t
+		dst_addr3_out : out regaddr_t;
+		-- output - ldm case
+		is_ldm_out : out std_logic
 	);
 end ComplexBreaker;
 
@@ -48,7 +50,17 @@ begin
 		dst_addr2_out <= dst_addr2_in;
 		imm2_out <= imm2_in;
 		opcode3_out <= op_nop;
-		if opcode1_in = op_push then
+		src_addr3_out <= notregaddr;
+		dst_addr3_out <= notregaddr;
+		is_ldm_out <= '0';
+		if opcode1_in = op_ldm then
+			opcode1_out <= op_mov;
+			src_addr1_out <= immregaddr;
+			opcode2_out <= op_nop;
+			src_addr2_out <= notregaddr;
+			dst_addr2_out <= notregaddr;
+			is_ldm_out <= '1';
+		elsif opcode1_in = op_push then
 			-- STD Rdst SP
 			opcode1_out <= op_std;
 			src_addr1_out <= dst_addr1_in;

@@ -42,7 +42,7 @@ entity DecodeStage is
 		val2_write : in dword_t;
 		-- Branch output (useful for CALL, 3rd inst is JMP)
 		-- decoder executes JMP branches only
-		is_branch : out std_logic;
+		is_jmp : out std_logic;
 		load_address : out dword_t;
 		--General 
 		flush : in std_logic;
@@ -56,6 +56,7 @@ end DecodeStage;
 Architecture Structural of DecodeStage is
 	signal inst1_tmp : word_t;
 	signal inst2_tmp : word_t;
+	signal is_ldm : std_logic;
 	-- first instruction
 	signal opcode1_inst: opcode_t;
 	signal src1_addr_inst: regaddr_t;
@@ -83,9 +84,10 @@ Architecture Structural of DecodeStage is
 	signal dest3_addr_cb: regaddr_t;
 
 	signal val_dst1_out_temp: dword_t;
-	signal val_src1_out_temp:  dword_t;
+	signal val_src1_out_temp: dword_t;
+	signal val_src1_out_ldm: dword_t;
 	signal val_dst2_out_temp: dword_t;
-	signal val_src2_out_temp:  dword_t;
+	signal val_src2_out_temp: dword_t;
 	signal alu_fun1:alufun_t;
 	signal alu_fun2:alufun_t;
 	signal update_flag1:std_logic;
@@ -129,7 +131,7 @@ begin
 		opcode2_out => opcode2_cb, src_addr2_out => src2_addr_cb,
 		dst_addr2_out => dest2_addr_cb, imm2_out => imm2_cb,
 		opcode3_out => opcode3_cb, src_addr3_out => src3_addr_cb,
-		dst_addr3_out => dest3_addr_cb
+		dst_addr3_out => dest3_addr_cb, is_ldm_out => is_ldm
 	);
 
 	execute_decode_inst1: entity processor.ExecuteControl
@@ -192,7 +194,7 @@ begin
 		opcode2_in => opcode2_cb, dst_val2_in => val_dst2_out_temp,
 		opcode3_in => opcode3_cb, dst_val3_in => val_dst1_out_temp,
 		-- output
-		is_branch => is_branch, load_address => load_address
+		is_branch => is_jmp, load_address => load_address
 	);
 
 	process(mem_fun1,mem_fun2)
@@ -230,6 +232,7 @@ begin
 		is_branch2
 	);
 
+	val_src1_out_ldm <= val_src1_out_temp when is_ldm = '0' else inst2_tmp;
 	decode_buffer: entity processor.Decode_Buffer
 	port map(
 		-- buffer input - first instruction
@@ -240,7 +243,7 @@ begin
 		immd1_in =>imm1_cb,
 		src_addr1_in =>src1_addr_cb,
 		dst_addr1_in=>dest1_addr_cb,
-		src_val1_in =>val_src1_out_temp,
+		src_val1_in =>val_src1_out_ldm,
 		dst_val1_in =>val_dst1_out_temp,
 		-- buffer input - second instruction
 		alu_op2_in  =>alu_fun2,
