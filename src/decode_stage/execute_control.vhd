@@ -19,6 +19,9 @@ begin
 	begin
 		update_flag <= '1';
 		alu_fun <= alu_first_op;
+		if dst_addr = pcregaddr or dst_addr = spregaddr then
+			update_flag <= '0';
+		end if;
 		if opcode = op_setc  then
 			alu_fun <= alu_setc;
 		elsif opcode = op_clrc  then
@@ -26,9 +29,17 @@ begin
 		elsif opcode = op_not  then
 			alu_fun <= alu_not;
 		elsif opcode = op_inc  then
-			alu_fun <= alu_inc;
+			if update_flag = '0' then
+				alu_fun <= alu_inc2;
+			else
+				alu_fun <= alu_inc;
+			end if;
 		elsif opcode = op_dec  then
-			alu_fun <= alu_dec;
+			if update_flag = '0' then
+				alu_fun <= alu_dec2;
+			else
+				alu_fun <= alu_dec;
+			end if;
 		elsif opcode = op_mov  then
 			alu_fun <= alu_second_op;
 		elsif opcode = op_add  then
@@ -45,9 +56,6 @@ begin
 			alu_fun <= alu_shr;
 		elsif opcode = op_ldd  then
 			alu_fun <= alu_second_op;
-		end if;
-		if dst_addr = pcregaddr or dst_addr = spregaddr then
-			update_flag <= '0';
 		end if;
 	end process;
 end Behavioral;
