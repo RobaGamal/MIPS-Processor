@@ -18,7 +18,7 @@ begin
 	process(dst_addr,opcode)
 	begin
 		update_flag <= '1';
-		alu_fun <= alu_first_op;
+		alu_fun <= alu_second_op;
 		if dst_addr = pcregaddr or dst_addr = spregaddr then
 			update_flag <= '0';
 		end if;
@@ -54,8 +54,6 @@ begin
 			alu_fun <= alu_shl;
 		elsif opcode = op_shr  then
 			alu_fun <= alu_shr;
-		elsif opcode = op_ldd  then
-			alu_fun <= alu_second_op;
 		end if;
 	end process;
 end Behavioral;
