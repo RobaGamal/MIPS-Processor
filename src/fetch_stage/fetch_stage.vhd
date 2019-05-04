@@ -14,6 +14,7 @@ entity FetchStage is
 		excep_mode : in std_logic := '0';
 		branch_mode : in std_logic := '0';
 		load_address : in dword_t := (others => '0');
+		flush : in std_logic;
 		clk : in std_logic;
 		rst : in std_logic
 	);
@@ -22,6 +23,8 @@ end FetchStage;
 architecture structural of FetchStage is
 	signal pc_addr_out : dword_t;
 	signal memout : dword_t;
+	signal inst1_tmp : word_t;
+	signal inst2_tmp : word_t;
 	signal inst1 : word_t;
 	signal inst2 : word_t;
 	signal inst1_resolved : word_t;
@@ -38,9 +41,11 @@ architecture structural of FetchStage is
 	-- signal ld_pc : std_logic:='0';
 	-- signal ld_buff : std_logic:='0';
 begin
-	inst1 <= memout(2*n_word-1 downto n_word);
-	inst2 <= memout(n_word-1 downto 0);
-
+	inst1_tmp <= memout(2*n_word-1 downto n_word);
+	inst2_tmp <= memout(n_word-1 downto 0);
+	inst1 <= (others => '0') when flush = '1' else inst1_tmp;
+	inst2 <= (others => '0') when flush = '1' else inst2_tmp;
+	
 	-- ld_pc <= clk;
 	pc_gen: entity processor.PCModule
 	port map (

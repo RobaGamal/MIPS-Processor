@@ -45,6 +45,7 @@ entity DecodeStage is
 		is_branch : out std_logic;
 		load_address : out dword_t;
 		--General 
+		flush : in std_logic;
 		clk : in std_logic;
 		rst : in std_logic;
 		stall : in std_logic:='0';
@@ -53,6 +54,8 @@ entity DecodeStage is
 end DecodeStage;
 
 Architecture Structural of DecodeStage is
+	signal inst1_tmp : word_t;
+	signal inst2_tmp : word_t;
 	-- first instruction
 	signal opcode1_inst: opcode_t;
 	signal src1_addr_inst: regaddr_t;
@@ -97,10 +100,12 @@ Architecture Structural of DecodeStage is
 	signal  is_branch1: std_logic_vector(2 downto 0);
 	signal  is_branch2: std_logic_vector(2 downto 0);
 begin
+	inst1_tmp <= (others => '0') when flush = '1' else inst1;
+	inst2_tmp <= (others => '0') when flush = '1' else inst2;
 	packet_decoder:entity processor.PacketDecode
 	port map (
-		inst1 ,
-		inst2 ,
+		inst1_tmp,
+		inst2_tmp,
 		opcode1_inst,
 		src1_addr_inst,
 		dest1_addr_inst,
