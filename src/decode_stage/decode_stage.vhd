@@ -48,20 +48,37 @@ entity DecodeStage is
 	);
 end DecodeStage;
 
---complex_circuit breaker goes here
 Architecture Structural of DecodeStage is
-	signal src1_addr: regaddr_t;
-	signal dest1_addr: regaddr_t;
-	signal src2_addr: regaddr_t;
-	signal dest2_addr: regaddr_t;
+	-- first instruction
+	signal opcode1_inst: opcode_t;
+	signal src1_addr_inst: regaddr_t;
+	signal dest1_addr_inst: regaddr_t;
+	signal imm1_inst: shiftamount_t;
+	-- _cb = _complexbreaker
+	signal opcode1_cb: opcode_t;
+	signal src1_addr_cb: regaddr_t;
+	signal dest1_addr_cb: regaddr_t;
+	signal imm1_cb: shiftamount_t;
+	
+	-- second instruction
+	signal opcode2_inst: opcode_t;
+	signal src2_addr_inst: regaddr_t;
+	signal dest2_addr_inst: regaddr_t;
+	signal imm2_inst: shiftamount_t;
+	signal opcode2_cb: opcode_t;
+	signal src2_addr_cb: regaddr_t;
+	signal dest2_addr_cb: regaddr_t;
+	signal imm2_cb: shiftamount_t;
+
+	-- third instruction
+	signal opcode3_cb: opcode_t;
+	signal src3_addr_cb: regaddr_t;
+	signal dest3_addr_cb: regaddr_t;
+
 	signal val_dst1_out_temp: dword_t;
 	signal val_src1_out_temp:  dword_t;
 	signal val_dst2_out_temp: dword_t;
 	signal val_src2_out_temp:  dword_t;
-	signal opcode1:opcode_t;
-	signal imm1: shiftamount_t;
-	signal opcode2 :opcode_t;
-	signal imm2:shiftamount_t;
 	signal alu_fun1:alufun_t;
 	signal alu_fun2:alufun_t;
 	signal update_flag1:std_logic;
@@ -80,58 +97,74 @@ begin
 	port map (
 		inst1 ,
 		inst2 ,
-		opcode1 ,
-		src1_addr,
-		dest1_addr ,
-		imm1 ,
-		opcode2 ,
-		src2_addr ,
-		dest2_addr ,
-		imm2
+		opcode1_inst,
+		src1_addr_inst,
+		dest1_addr_inst,
+		imm1_inst,
+		opcode2_inst,
+		src2_addr_inst,
+		dest2_addr_inst,
+		imm2_inst
+	);
+
+	complex_breaker: entity processor.ComplexBreaker
+	port map (
+		-- input
+		opcode1_in => opcode1_inst, src_addr1_in => src1_addr_inst,
+		dst_addr1_in => dest1_addr_inst, imm1_in => imm1_inst,
+		opcode2_in => opcode2_inst, src_addr2_in => src2_addr_inst,
+		dst_addr2_in => dest2_addr_inst, imm2_in => imm2_inst,
+		-- output
+		opcode1_out => opcode1_cb, src_addr1_out => src1_addr_cb,
+		dst_addr1_out => dest1_addr_cb, imm1_out => imm1_cb,
+		opcode2_out => opcode2_cb, src_addr2_out => src2_addr_cb,
+		dst_addr2_out => dest2_addr_cb, imm2_out => imm2_cb,
+		opcode3_out => opcode3_cb, src_addr3_out => src3_addr_cb,
+		dst_addr3_out => dest3_addr_cb
 	);
 
 	execute_decode_inst1: entity processor.ExecuteControl
 	port map (
-		opcode1,
-		dest1_addr,
-		alu_fun1 ,
+		opcode1_cb,
+		dest1_addr_cb,
+		alu_fun1,
 		update_flag1
 	);
 
 	execute_decode_inst2: entity processor.ExecuteControl
 	port map (
-		opcode2,
-		dest2_addr,
+		opcode2_cb,
+		dest2_addr_cb,
 		alu_fun2 ,
 		update_flag2
 	);
 
 	memory_decode_inst1:entity processor.MemoryControl
 	port map (
-		opcode1,
-		src1_addr,
-		dest1_addr,
+		opcode1_cb,
+		src1_addr_cb,
+		dest1_addr_cb,
 		mem_fun1
 	);
 
 	memory_decode_inst2:entity processor.MemoryControl
 	port map (
-		opcode2,
-		src2_addr,
-		dest2_addr,
+		opcode2_cb,
+		src2_addr_cb,
+		dest2_addr_cb,
 		mem_fun2
 	);
 
 	regfile:entity processor.regfile
 	port map (
 		pc_val => pc_val,
-		src1_addr_read => src1_addr,
+		src1_addr_read => src1_addr_cb,
 		val_src1_out => val_src1_out_temp,
-		dst1_addr_read => dest1_addr,
+		dst1_addr_read => dest1_addr_cb,
 		val_dst1_out => val_dst1_out_temp,
-		src2_addr_read=>src2_addr,
-		val_src2_out=>val_dst2_out_temp,
-		dst2_addr_read=>dest2_addr,
+		src2_addr_read => src2_addr_cb,
+		val_src2_out => val_dst2_out_temp,
+		dst2_addr_read => dest2_addr_cb,
 		val_dst2_out=>val_src2_out_temp,
 		addr1_write=>addr1_write ,
 		ld1_write=>ld1_write,
@@ -156,25 +189,25 @@ begin
 	ld_buff<= ld and not(stall);
 	wb_signal_inst1:entity processor.WBControl
 	port map (
-		opcode1 ,
+		opcode1_cb,
 		wb1
 	);
 
 	wb_signal_inst2:entity processor.WBControl
 	port map (
-		opcode2 ,
+		opcode2_cb,
 		wb2
 	);
 
 	is_branch_inst1:entity processor.Isbranch
 	port map (
-		opcode1,
+		opcode1_cb,
 		is_branch1
 	);
 
 	is_branch_inst2:entity processor.Isbranch
 	port map (
-		opcode2,
+		opcode2_cb,
 		is_branch2
 	);
 
@@ -185,9 +218,9 @@ begin
 		update_flag1_in =>update_flag1,
 		wb1_in =>wb1,
 		is_branch1_in=>is_branch1,
-		immd1_in =>imm1,
-		src_addr1_in =>src1_addr,
-		dst_addr1_in=>dest1_addr,
+		immd1_in =>imm1_cb,
+		src_addr1_in =>src1_addr_cb,
+		dst_addr1_in=>dest1_addr_cb,
 		src_val1_in =>val_src1_out_temp,
 		dst_val1_in =>val_dst1_out_temp,
 		-- buffer input - second instruction
@@ -195,9 +228,9 @@ begin
 		update_flag2_in =>update_flag2,
 		wb2_in =>wb2,
 		is_branch2_in =>is_branch2,
-		immd2_in =>imm2,
-		src_addr2_in =>src2_addr,
-		dst_addr2_in =>dest2_addr,
+		immd2_in =>imm2_cb,
+		src_addr2_in =>src2_addr_cb,
+		dst_addr2_in =>dest2_addr_cb,
 		src_val2_in =>val_src2_out_temp,
 		dst_val2_in=>val_dst2_out_temp,
 		-- buffer input - memory
