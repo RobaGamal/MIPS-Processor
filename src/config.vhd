@@ -80,6 +80,7 @@ package config is
 	constant pcregaddr : regaddr_t := "1000";
 	constant spregaddr : regaddr_t := "1001";
 	constant immregaddr_l : regaddr_t := "1010";
+	constant notregaddr : regaddr_t := "1111";
 	--constant n_shiftamount : natural := 4;
     constant n_shiftamount : natural := 3;
 	subtype shiftamount_t is std_logic_vector(n_shiftamount-1 downto 0);
