@@ -61,7 +61,9 @@ package config is
 	constant op_call : opcode_t := "10100";
 	constant op_ret : opcode_t := "10101";
 	constant op_reti : opcode_t := "10110";
-
+	constant op_inc2 : opcode_t := "10111";
+	constant op_dec2 : opcode_t := "11000";
+	
 	-- Memory stage Constants --
 	constant n_memfun : natural := 3;
 	subtype memfun_t is std_logic_vector(n_memfun - 1 downto 0);
