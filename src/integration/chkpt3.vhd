@@ -2,7 +2,7 @@ library ieee;
 library processor;
 use ieee.std_logic_1164.all;
 use processor.config.all;
-entity pipelinedProcessor is
+entity pipelinedProcessor3 is
 generic(n_pc: natural:=32 );
 port(
 
@@ -13,15 +13,15 @@ port(
 );
 
 
-end pipelinedProcessor;
+end pipelinedProcessor3;
 
 
 
 
 
 
-Architecture Structural of pipelinedProcessor is
-signal stall:std_logic;
+Architecture Structural of pipelinedProcessor3 is
+signal stall:std_logic:='0';
 signal inst1:word_t;
 signal inst2:word_t;
 signal pc_val:dword_t;
@@ -72,6 +72,17 @@ signal val_src1_out_ex: dword_t;
 signal val_dst2_out_ex: dword_t;
 signal val_src2_out_ex: dword_t;
 
+signal wb_1_out_mem:std_logic;
+signal wb_2_out_mem:std_logic;
+signal src1_add_out_mem:regaddr_t ;
+signal dst1_add_out_mem:regaddr_t ;
+signal src2_add_out_mem:regaddr_t ;
+signal dst2_add_out_mem:regaddr_t ;
+
+signal val_dst1_out_mem: dword_t;
+signal val_src1_out_mem: dword_t;
+signal val_dst2_out_mem: dword_t;
+signal val_src2_out_mem: dword_t;
 
 begin 
 fetch_stage:entity processor .FetchStage
@@ -142,7 +153,7 @@ decode_stage:entity processor. DecodeStage
         src1_add_in=>src1_add_out,
         dst1_add_in=>dst1_add_out ,
         src2_add_in=>src2_add_out,
-        dst2_add_in=>dst1_add_out ,
+        dst2_add_in=>dst2_add_out ,
         val_dst1_in=>val_dst1_out,
         val_src1_in=>val_src1_out,
         val_dst2_in=>val_dst2_out,
@@ -158,7 +169,7 @@ decode_stage:entity processor. DecodeStage
         wb_1_in=>wb_1_out ,
         wb_2_in=>wb_2_out ,
         immd1_in=>immd1_out,
-	immd2_in=>immd2_out,
+	    immd2_in=>immd2_out,
 	   
         
         
@@ -182,7 +193,41 @@ decode_stage:entity processor. DecodeStage
 
 
     );
-
+    memory_stage:entity processor. Memory_stage 
+        port map ( 
+            memrw =>mem_func_out_ex,
+            mem_inst_no=>mem_inst_no_out_ex, 
+            src1_add_in=>src1_add_out_ex,
+            dst1_add_in=>dst1_add_out_ex,
+            src2_add_in=>src2_add_out_ex ,
+            dst2_add_in=>dst2_add_out_ex,
+            val_dst1_in=>val_dst1_out_ex,
+            val_src1_in=>val_src1_out_ex,
+            val_dst2_in=>val_dst2_out_ex,
+            val_src2_in=>val_src2_out_ex,
+           
+            wb_1_in=>wb_1_out_ex,
+            wb_2_in=>wb_2_out_ex,
+           
+           
+            wb_1_out=>wb_1_out_mem,
+            wb_2_out=>wb_2_out_mem,
+            src1_add_out=> src1_add_out_mem ,
+            dst1_add_out=> dst1_add_out_mem,
+            src2_add_out=>src2_add_out_mem ,
+            dst2_add_out=>dst2_add_out_mem ,
+            val_dst1_out=>val_dst1_out_mem,
+            val_src1_out=>val_src1_out_mem,
+            val_dst2_out=>val_dst2_out_mem,
+            val_src2_out=>val_src2_out_mem,
+           
+            clk=>clk,
+            rst=>rst,
+            stall=>stall,
+            ld=>'1'
+    
+    
+        );
 
 
 end Structural ;

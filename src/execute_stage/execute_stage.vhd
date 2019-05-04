@@ -61,8 +61,7 @@ signal  z_flag:std_logic;
 signal 	n_flag:std_logic;
 signal	c_flag:std_logic;
 signal update_flag1: std_logic;
-signal update_flag2: std_logic;  
-signal mem_op_temp:std_logic_vector(2 downto 0);
+signal update_flag2: std_logic; 
 signal flags:std_logic_vector(2 downto 0);
 signal branch1:std_logic;
 signal branch2:std_logic;
@@ -118,7 +117,7 @@ branch_ex2:entity processor.branch_execute
 execute_buffer: entity processor.Execute_Buffer 
 
 port map(  
-        mem_op_temp,
+        mem_op_in,
 	    mem_inst_no_in,
         wb_1_in,
         wb_2_in,
