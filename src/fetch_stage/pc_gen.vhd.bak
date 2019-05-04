@@ -17,7 +17,7 @@ end PCGen;
 
 architecture Behavioural of PCGen is
 begin
-	process(pc_old, normal_mode, non_comp_mode, branch_mode, load_address)
+	process(pc_old, normal_mode, non_comp_mode, branch_mode, excep_mode, load_address)
 	begin
 		 if branch_mode = '1' then
 			pc_new <= load_address;

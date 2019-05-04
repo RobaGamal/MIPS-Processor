@@ -8,7 +8,7 @@ port(
 
     clk:in std_logic ;
     interrupt:in std_logic;
-    
+    flush:in std_logic;
     rst:in std_logic
 );
 
@@ -27,9 +27,6 @@ signal inst2:word_t;
 signal pc_val:dword_t;
 
 signal jump_address:dword_t;
-signal normal_mode :std_logic := '1';
-signal non_comp_mode:std_logic := '0';
-signal excep_mode :std_logic := '0';
 signal branch_mode : std_logic := '0';
 signal src1_add_out: regaddr_t ;
 signal dst1_add_out: regaddr_t ;
@@ -71,20 +68,33 @@ signal val_dst1_out_ex: dword_t;
 signal val_src1_out_ex: dword_t;
 signal val_dst2_out_ex: dword_t;
 signal val_src2_out_ex: dword_t;
-
+signal branch_exc:std_logic;
+signal jmp_cond_address:dword_t;
+signal pc_load:dword_t;
+signal is_jmp:std_logic;
 
 begin 
+branch_mode<=branch_exc or is_jmp;
+
+process(is_jmp,branch_exc)
+begin
+if(is_jmp='1') then 
+pc_load <= jump_address;
+elsif  branch_exc='1' then
+pc_load<= jmp_cond_address ; 
+end if; 
+end process;
+
+
 fetch_stage:entity processor .FetchStage
 port map (
     inst1,
     inst2, 
     pc_val ,
     stall ,
-    normal_mode ,
-    non_comp_mode,
-    excep_mode ,
     branch_mode ,
-    jump_address ,
+	pc_load ,
+	flush,
     clk ,
     rst 
 );
@@ -128,12 +138,19 @@ decode_stage:entity processor. DecodeStage
 		addr2_write ,
 		ld2_write ,
 		val2_write ,
-		--General 
+		---- Branch output (useful for CALL, 3rd inst is JMP)
+		-- decoder executes JMP branches only
+		is_jmp ,
+		jump_address ,
+		--General
+		flush , 
 		clk ,
 		rst ,
 		stall ,
 		'1'
 	);
+
+
 
 
 
@@ -158,10 +175,10 @@ decode_stage:entity processor. DecodeStage
         wb_1_in=>wb_1_out ,
         wb_2_in=>wb_2_out ,
         immd1_in=>immd1_out,
-	immd2_in=>immd2_out,
+	    immd2_in=>immd2_out,
 	   
         
-        
+        branch_mode=>branch_exc,
         mem_op_out=>mem_func_out_ex,
         mem_inst_no_out=>mem_inst_no_out_ex,
         wb_1_out=>wb_1_out_ex,
@@ -174,7 +191,8 @@ decode_stage:entity processor. DecodeStage
         val_src1_out=>val_src1_out_ex,
         val_dst2_out=>val_dst2_out_ex,
         val_src2_out=>val_src2_out_ex,
-        load_address=>jump_address,
+        load_address=>jmp_cond_address,
+        flush=>flush,
         clk=>clk,
         rst=>rst,
         stall=>stall,

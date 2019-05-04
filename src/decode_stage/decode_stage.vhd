@@ -57,6 +57,8 @@ Architecture Structural of DecodeStage is
 	signal inst1_tmp : word_t;
 	signal inst2_tmp : word_t;
 	signal is_ldm : std_logic;
+	signal inst1_tmp_ext:dword_t;
+	signal inst2_tmp_ext:dword_t;
 	-- first instruction
 	signal opcode1_inst: opcode_t;
 	signal src1_addr_inst: regaddr_t;
@@ -104,6 +106,8 @@ Architecture Structural of DecodeStage is
 begin
 	inst1_tmp <= (others => '0') when flush = '1' else inst1;
 	inst2_tmp <= (others => '0') when flush = '1' else inst2;
+	inst1_tmp_ext(n_dword-1 downto n_word) <= (others => inst1_tmp (n_word-1));
+	inst2_tmp_ext(n_dword-1 downto n_word) <= (others => inst2_tmp (n_word-1));
 	packet_decoder:entity processor.PacketDecode
 	port map (
 		inst1_tmp,
@@ -232,7 +236,7 @@ begin
 		is_branch2
 	);
 
-	val_src1_out_ldm <= val_src1_out_temp when is_ldm = '0' else inst2_tmp;
+	val_src1_out_ldm <= val_src1_out_temp when is_ldm = '0' else inst2_tmp_ext;
 	decode_buffer: entity processor.Decode_Buffer
 	port map(
 		-- buffer input - first instruction

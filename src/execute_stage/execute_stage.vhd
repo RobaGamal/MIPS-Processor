@@ -27,7 +27,7 @@ entity Execute_stage is
 	    immd2_in:in shiftamount_t;
 	   
         
-        
+        branch_mode:out std_logic;
         mem_op_out:out std_logic_vector(2 downto 0);
         mem_inst_no_out:out std_logic;
         wb_1_out:out std_logic;
@@ -40,7 +40,8 @@ entity Execute_stage is
         val_src1_out:out dword_t;
         val_dst2_out:out dword_t;
         val_src2_out:out dword_t;
-        load_address:out dword_t:=(others=>'0');
+        load_address:out dword_t;
+        flush:std_logic:='0';
         clk:in std_logic;
         rst: in std_logic;
         stall:in std_logic:='0';
@@ -53,34 +54,77 @@ end Execute_stage;
 
 Architecture Structural of Execute_stage is
 
+signal val_src1_in_temp:dword_t;
+signal val_dst1_in_temp:dword_t;
+signal immd1_in_temp:shiftamount_t;
+signal alu_op1_in_temp:alufun_t;
+signal update_flag1_temp:std_logic;
+
+signal val_src2_in_temp:dword_t;
+signal val_dst2_in_temp:dword_t;
+signal immd2_in_temp:shiftamount_t;
+signal alu_op2_in_temp:alufun_t;
+signal update_flag2_temp:std_logic;
+
 
 signal ld_buff: std_logic;
-signal  val_dest1_out_temp:dword_t;
-signal  val_dest2_out_temp:dword_t;
-signal  z_flag:std_logic;
-signal 	n_flag:std_logic;
-signal	c_flag:std_logic;
+signal val_dest1_out_temp:dword_t;
+signal val_dest2_out_temp:dword_t;
+signal z_flag:std_logic;
+signal n_flag:std_logic;
+signal c_flag:std_logic;
 signal update_flag1: std_logic;
 signal update_flag2: std_logic; 
 signal flags:std_logic_vector(2 downto 0);
 signal branch1:std_logic;
 signal branch2:std_logic;
+signal mem_op_in_temp:std_logic_vector(2 downto 0);
+signal mem_inst_no_in_temp:std_logic;
+signal wb_1_in_temp:std_logic;
+signal wb_2_in_temp:std_logic;
+signal src1_add_in_temp:regaddr_t;
+signal dst1_add_in_temp:regaddr_t;
+signal src2_add_in_temp:regaddr_t;
+signal dst2_add_in_temp:regaddr_t;
 begin
 ld_buff<= ld and  not(stall) ;
 update_flag1<=update_flag_in1;
 update_flag2<=update_flag_in2;
+
+val_src1_in_temp <= (others => '0') when flush = '1' else val_src1_in;
+val_dst1_in_temp <= (others => '0') when flush = '1' else val_dst1_in;
+immd1_in_temp <= (others => '0') when flush = '1' else immd1_in;
+alu_op1_in_temp<= (others => '0') when flush = '1' else alu_op1_in;
+update_flag1_temp<= '0' when flush = '1' else update_flag1 ;
+
+
+val_src2_in_temp <= (others => '0') when flush = '1' else val_src2_in;
+val_dst2_in_temp <= (others => '0') when flush = '1' else val_dst2_in;
+immd2_in_temp <= (others => '0') when flush = '1' else immd2_in;
+alu_op2_in_temp<= (others => '0') when flush = '1' else alu_op2_in;
+update_flag2_temp<='0' when flush = '1' else update_flag2 ;
+
+mem_op_in_temp <= (others => '0') when flush = '1' else mem_op_in;
+mem_inst_no_in_temp <= '0' when flush = '1' else mem_inst_no_in;
+wb_1_in_temp <=  '0' when flush = '1' else wb_1_in;
+wb_2_in_temp<= '0' when flush = '1' else wb_2_in;
+
+src1_add_in_temp<=(others => '0') when flush = '1' else src1_add_in;
+dst1_add_in_temp<=(others => '0') when flush = '1' else dst1_add_in;
+src2_add_in_temp<=(others => '0') when flush = '1' else src2_add_in;
+dst2_add_in_temp<=(others => '0') when flush = '1' else dst2_add_in;
 alu:entity processor.ALUWithFlags 
 	port map(
-        val_src1_in ,
-		val_dst1_in ,
-        immd1_in,
-        immd2_in,
-        alu_op1_in,
-        update_flag1 ,
-        val_src2_in,
-        val_dst2_in ,
-		alu_op2_in,
-        update_flag2 ,
+        val_src1_in_temp ,
+		val_dst1_in_temp ,
+        immd1_in_temp,
+        immd2_in_temp,
+        alu_op1_in_temp,
+        update_flag1_temp ,
+        val_src2_in_temp,
+        val_dst2_in_temp ,
+		alu_op2_in_temp,
+        update_flag2_temp ,
 
         clk ,
         rst,
@@ -113,25 +157,35 @@ branch_ex2:entity processor.branch_execute
     
     );
     
+branch_mode<=branch1 or branch2;
+
+process(branch1,branch2)
+begin
+    if(branch1='1') then
+    load_address<=val_src1_in_temp;
+    elsif branch2='1' then
+    load_address<=val_src2_in_temp;  
+    
+    end if;    
+end process;
 
 execute_buffer: entity processor.Execute_Buffer 
-
 port map(  
-        mem_op_in,
-	    mem_inst_no_in,
-        wb_1_in,
-        wb_2_in,
-        src1_add_in,
-        dst1_add_in,
-        src2_add_in,
-        dst2_add_in,
-        val_src1_in,
+        mem_op_in_temp,
+	    mem_inst_no_in_temp,
+        wb_1_in_temp,
+        wb_2_in_temp,
+        src1_add_in_temp,
+        dst1_add_in_temp,
+        src2_add_in_temp,
+        dst2_add_in_temp,
+        val_src1_in_temp,
         val_dest1_out_temp,
-        val_src2_in,
+        val_src2_in_temp,
         val_dest2_out_temp,
         
         mem_op_out,
-	mem_inst_no_out,
+	    mem_inst_no_out,
         wb_1_out,
         wb_2_out,
         src1_add_out,

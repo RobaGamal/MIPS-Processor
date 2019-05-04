@@ -2,7 +2,7 @@ library ieee;
 library processor;
 use ieee.std_logic_1164.all;
 use processor.config.all;
-entity pipelinedProcessor3 is
+entity pipelinedProcessor4 is
 generic(n_pc: natural:=32 );
 port(
 
@@ -13,14 +13,14 @@ port(
 );
 
 
-end pipelinedProcessor3;
+end pipelinedProcessor4;
 
 
 
 
 
 
-Architecture Structural of pipelinedProcessor3 is
+Architecture Structural of pipelinedProcessor4 is
 signal stall:std_logic:='0';
 signal flush:std_logic:='0';
 signal inst1:word_t;
@@ -250,6 +250,12 @@ decode_stage:entity processor. DecodeStage
     
     
         );
-
+  -- write back stage
+    addr1_write <=dst1_add_out_mem;
+    ld1_write <=wb_1_out_mem;
+    val1_write <= val_dst1_out_mem;
+    addr2_write <= dst2_add_out_mem;
+    ld2_write <= wb_2_out_mem;
+    val2_write <= val_dst2_out_mem;
 
 end Structural ;

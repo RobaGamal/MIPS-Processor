@@ -21,15 +21,16 @@ sim:/pipelinedprocessor/alu_op1_out \
 sim:/pipelinedprocessor/alu_op2_out \
 sim:/pipelinedprocessor/update_flag_out1 \
 sim:/pipelinedprocessor/update_flag_out2 \
-sim:/pipelinedprocessor/mem_op_out \
+sim:/pipelinedprocessor/mem_fun_out \
 sim:/pipelinedprocessor/mem_inst_no_out \
 sim:/pipelinedprocessor/wb_1_out \
 sim:/pipelinedprocessor/wb_2_out \
-sim:/pipelinedprocessor/is_branch_out \
+sim:/pipelinedprocessor/is_branch1_out \
+sim:/pipelinedprocessor/is_branch2_out \
 sim:/pipelinedprocessor/immd1_out \
 sim:/pipelinedprocessor/immd2_out
 add wave -position insertpoint  \
-sim:/pipelinedprocessor/pc_out
+sim:/pipelinedprocessor/pc_val
 
 
 

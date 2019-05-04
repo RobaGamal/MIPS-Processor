@@ -8,7 +8,6 @@ port(
 
     clk:in std_logic ;
     interrupt:in std_logic;
-    
     rst:in std_logic
 );
 
@@ -25,11 +24,10 @@ signal stall:std_logic;
 signal inst1:word_t;
 signal inst2:word_t;
 signal pc_val:dword_t;
+signal flush:std_logic:='0';
 
 signal jump_address:dword_t;
-signal normal_mode :std_logic := '1';
-signal non_comp_mode:std_logic := '0';
-signal excep_mode :std_logic := '0';
+signal is_jmp:std_logic;
 signal branch_mode : std_logic := '0';
 signal src1_add_out: regaddr_t ;
 signal dst1_add_out: regaddr_t ;
@@ -65,11 +63,9 @@ port map (
     inst2, 
     pc_val ,
     stall ,
-    normal_mode ,
-    non_comp_mode,
-    excep_mode ,
     branch_mode ,
-    jump_address ,
+	jump_address ,
+	flush,
     clk ,
     rst 
 );
@@ -113,7 +109,12 @@ decode_stage:entity processor. DecodeStage
 		addr2_write ,
 		ld2_write ,
 		val2_write ,
-		--General 
+		---- Branch output (useful for CALL, 3rd inst is JMP)
+		-- decoder executes JMP branches only
+		is_jmp ,
+		jump_address ,
+		--General
+		flush , 
 		clk ,
 		rst ,
 		stall ,

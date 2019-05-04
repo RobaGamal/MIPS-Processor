@@ -9,6 +9,9 @@ entity FetchStage is
 		inst2_out : out word_t;
 		pc_out : out dword_t;
 		stall : in std_logic :='0';
+		normal_mode : in std_logic := '0';
+		non_comp_mode: in std_logic := '0';
+		excep_mode : in std_logic := '0';
 		branch_mode : in std_logic := '0';
 		load_address : in dword_t := (others => '0');
 		flush : in std_logic;
@@ -34,9 +37,7 @@ architecture structural of FetchStage is
 	signal src2_addr : regaddr_t;
 	signal dst2_addr : regaddr_t;
 	signal imm2 : shiftamount_t;
-	signal is_compatible : std_logic:='1';
-	signal non_comp:std_logic;
-	signal normal:std_logic;
+	signal is_compatible : std_logic;
 	-- signal ld_pc : std_logic:='0';
 	-- signal ld_buff : std_logic:='0';
 begin
@@ -44,14 +45,14 @@ begin
 	inst2_tmp <= memout(n_word-1 downto 0);
 	inst1 <= (others => '0') when flush = '1' else inst1_tmp;
 	inst2 <= (others => '0') when flush = '1' else inst2_tmp;
-	non_comp<=not(is_compatible);
-	normal<=not(branch_mode) and is_compatible;
+	
 	-- ld_pc <= clk;
 	pc_gen: entity processor.PCModule
 	port map (
 		stall => stall,
-		normal_mode => normal,
-		non_comp_mode => non_comp ,
+		normal_mode => normal_mode,
+		non_comp_mode => non_comp_mode,
+		excep_mode => excep_mode,
 		branch_mode => branch_mode,
 		load_address => load_address,
 		ld => clk,

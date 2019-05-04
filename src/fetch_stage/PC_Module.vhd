@@ -8,7 +8,6 @@ entity PCModule is
 		stall : in std_logic := '0';
 		normal_mode : in std_logic := '0';
 		non_comp_mode: in std_logic := '0';
-		excep_mode : in std_logic := '0';
 		branch_mode : in std_logic := '0';
 		load_address : in dword_t := (others => '0');
 		ld:in std_logic:='1';
@@ -27,7 +26,6 @@ begin
 	port map (        
 		normal_mode => normal_mode,
 		non_comp_mode => non_comp_mode,
-		excep_mode => excep_mode,
 		branch_mode => branch_mode,
 		pc_old => pc_out,
 		load_address => load_address,

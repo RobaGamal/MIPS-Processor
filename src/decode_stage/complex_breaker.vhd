@@ -55,7 +55,7 @@ begin
 		is_ldm_out <= '0';
 		if opcode1_in = op_ldm then
 			opcode1_out <= op_mov;
-			src_addr1_out <= immregaddr;
+			src_addr1_out <= immregaddr_l ;
 			opcode2_out <= op_nop;
 			src_addr2_out <= notregaddr;
 			dst_addr2_out <= notregaddr;
