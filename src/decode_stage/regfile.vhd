@@ -7,6 +7,9 @@ use processor.config.all;
 entity RegFile is
 	port (
 		pc_val : in dword_t;
+		-- IN register
+		in_val : in word_t;
+		in_ld : in std_logic;
 		-- read operation
 		src1_addr_read : in regaddr_t;
 		val_src1_out : out dword_t;
@@ -32,14 +35,16 @@ architecture Structural  of RegFile is
 	signal q_arr : reg_vector := (others => (others => '0'));
 	signal d_arr : reg_vector := (others => (others => '0'));
 	signal l_arr : word_t := (others => '0');
+	signal not_clk : std_logic;
 begin
+	not_clk <= not(clk);
 	reg_loop : for i in 0 to n_register-1 generate
 		reg: entity processor.Reg
 		generic map (n_word)
 		port map (
 			d_arr(i)(n_word-1 downto 0),
 			q_arr(i)(n_word-1 downto 0),
-			clk, l_arr(i), rst
+			not_clk, l_arr(i), rst -- falling edge
 		);
 		-- sign extend
 		q_arr(i)(n_dword-1 downto n_word) <= (others => q_arr(i)(n_word-1));
@@ -51,12 +56,20 @@ begin
 						else '0';
 	end generate;
 
+	in_reg: entity processor.Reg
+	generic map (n_word)
+	port map(
+		d_arr(to_integer(unsigned(inregaddr)))(n_word-1 downto 0),
+		q_arr(to_integer(unsigned(inregaddr)))(n_word-1 downto 0),
+		not_clk, in_ld, rst
+	);
+
 	sp_gen: entity processor.Reg
 	generic map (n_dword)
 	port map(
 		d_arr(to_integer(unsigned(spregaddr))),
 		q_arr(to_integer(unsigned(spregaddr))),
-		clk,
+		not_clk,
 		l_arr(to_integer(unsigned(spregaddr))),
 		rst
 	);

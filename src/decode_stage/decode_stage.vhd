@@ -9,6 +9,9 @@ entity DecodeStage is
 		inst1 : in word_t;
 		inst2 : in word_t;
 		pc_val : in dword_t;
+		-- in port
+		in_val : in word_t;
+		in_ld : in std_logic;
 		-- Operands data
 		src1_addr_out : out regaddr_t;
 		val_src1_out: out dword_t;
@@ -101,8 +104,8 @@ Architecture Structural of DecodeStage is
 	signal wb1:std_logic;
 	signal wb2:std_logic;
 	signal ld_buff: std_logic;
-	signal  is_branch1: std_logic_vector(2 downto 0);
-	signal  is_branch2: std_logic_vector(2 downto 0);
+	signal is_branch1: std_logic_vector(2 downto 0);
+	signal is_branch2: std_logic_vector(2 downto 0);
 begin
 	inst1_tmp <= (others => '0') when flush = '1' else inst1;
 	inst2_tmp <= (others => '0') when flush = '1' else inst2;
@@ -173,6 +176,8 @@ begin
 	regfile:entity processor.regfile
 	port map (
 		pc_val => pc_val,
+		in_val => in_val,
+		in_ld => in_ld,
 		src1_addr_read => src1_addr_cb,
 		val_src1_out => val_src1_out_temp,
 		dst1_addr_read => dest1_addr_cb,
@@ -201,14 +206,7 @@ begin
 		is_branch => is_jmp, load_address => load_address
 	);
 
-	process(mem_fun1,mem_fun2)
-	begin
-		if(mem_fun1=mem_nop)then
-			mem_inst_no<='1';
-		elsif(mem_fun2=mem_nop)then
-			mem_inst_no<='0';
-		end if;
-	end process;
+	mem_inst_no <= '1' when mem_fun1 = mem_nop else '0';
 
 	mem_fun_in<=mem_fun1 or mem_fun2;
 	ld_buff<= ld and not(stall);

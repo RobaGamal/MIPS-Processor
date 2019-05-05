@@ -31,6 +31,14 @@ package config is
 	constant alu_setc : alufun_t := "1011";
 	constant alu_clearc : alufun_t := "1100";
 
+	-- Branch operations --
+	constant n_brfun : natural := 3;
+	subtype brfun_t is std_logic_vector(n_brfun - 1 downto 0);
+	constant br_nop : brfun_t := "000";
+	constant br_jz : brfun_t := "001";
+	constant br_jn : brfun_t := "010";
+	constant br_jc : brfun_t := "011"; 
+
 	-- opcodes
 	constant n_opcode : natural := 5;
 	subtype opcode_t is std_logic_vector(n_opcode - 1 downto 0);
@@ -82,6 +90,7 @@ package config is
 	constant pcregaddr : regaddr_t := "1000";
 	constant spregaddr : regaddr_t := "1001";
 	constant immregaddr_l : regaddr_t := "1010";
+	constant inregaddr : regaddr_t := "1011";
 	constant notregaddr : regaddr_t := "1111";
 	--constant n_shiftamount : natural := 4;
     constant n_shiftamount : natural := 3;
