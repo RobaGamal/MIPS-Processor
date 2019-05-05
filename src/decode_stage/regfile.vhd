@@ -58,7 +58,7 @@ begin
 
 	in_reg: entity processor.Reg
 	generic map (n_word)
-	port map(
+	port map (
 		d_arr(to_integer(unsigned(inregaddr)))(n_word-1 downto 0),
 		q_arr(to_integer(unsigned(inregaddr)))(n_word-1 downto 0),
 		not_clk, in_ld, rst
