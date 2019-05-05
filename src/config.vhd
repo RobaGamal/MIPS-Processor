@@ -54,7 +54,7 @@ package config is
 	constant op_add : opcode_t := "01001";
 	constant op_sub : opcode_t := "01010";
 	constant op_and : opcode_t := "01011";
-	constant op_or : opcode_t := "01000";
+	constant op_or : opcode_t := "01100";
 	constant op_shl : opcode_t := "01101";
 	constant op_shr : opcode_t := "01110";
 	constant op_push : opcode_t := "11000";
