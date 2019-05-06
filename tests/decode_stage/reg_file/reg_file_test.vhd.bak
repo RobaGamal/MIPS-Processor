@@ -30,13 +30,13 @@ architecture Test of RegFileTest is
     signal ld2_write : std_logic;
     signal val2_write : dword_t;
     signal in_ld : std_logic;
-    signal in_val : word_t ;
+    signal in_val : word_t
 begin
     process is
     begin
-        clk <= '1';
-        wait for period / 2;
         clk <= '0';
+        wait for period / 2;
+        clk <= '1';
         wait for period / 2;
     end process;
 

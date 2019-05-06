@@ -72,7 +72,8 @@ signal branch_exc:std_logic;
 signal jmp_cond_address:dword_t;
 signal pc_load:dword_t;
 signal is_jmp:std_logic;
-
+signal in_val :  word_t;
+signal in_ld :  std_logic;
 begin 
 branch_mode<=branch_exc or is_jmp;
 
@@ -106,7 +107,10 @@ decode_stage:entity processor. DecodeStage
 		-- IF/ID buffer
 		inst1 ,
 		inst2 ,
-		pc_val,
+        pc_val,
+        --in port 
+         in_val ,
+         in_ld ,
 		-- Operands data
 		src1_add_out ,
 		val_src1_out,

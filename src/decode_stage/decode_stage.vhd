@@ -26,8 +26,8 @@ entity DecodeStage is
 		update_flag_out1 : out std_logic;
 		alu_op2_out : out alufun_t;
 		update_flag_out2 : out std_logic;
-		is_branch1_out : out std_logic_vector(2 downto 0);
-		is_branch2_out : out std_logic_vector(2 downto 0);
+		is_branch1_out : out brfun_t;
+		is_branch2_out : out brfun_t;
 		immd1_out : out shiftamount_t;
 		immd2_out : out shiftamount_t;
 		-- Memory stage control
@@ -47,18 +47,15 @@ entity DecodeStage is
 		-- decoder executes JMP branches only
 		is_jmp : out std_logic;
 		load_address : out dword_t;
-		--General 
+		--General
 		flush : in std_logic;
 		clk : in std_logic;
 		rst : in std_logic;
-		stall : in std_logic:='0';
-		ld : in std_logic:='1'
+		stall : in std_logic:='0'
 	);
 end DecodeStage;
 
 Architecture Structural of DecodeStage is
-	signal inst1_tmp : word_t;
-	signal inst2_tmp : word_t;
 	signal is_ldm : std_logic;
 	signal inst1_tmp_ext:dword_t;
 	signal inst2_tmp_ext:dword_t;
@@ -72,7 +69,7 @@ Architecture Structural of DecodeStage is
 	signal src1_addr_cb: regaddr_t;
 	signal dest1_addr_cb: regaddr_t;
 	signal imm1_cb: shiftamount_t;
-	
+
 	-- second instruction
 	signal opcode2_inst: opcode_t;
 	signal src2_addr_inst: regaddr_t;
@@ -93,6 +90,7 @@ Architecture Structural of DecodeStage is
 	signal val_src1_out_ldm: dword_t;
 	signal val_dst2_out_temp: dword_t;
 	signal val_src2_out_temp: dword_t;
+	
 	signal alu_fun1:alufun_t;
 	signal alu_fun2:alufun_t;
 	signal update_flag1:std_logic;
@@ -106,15 +104,16 @@ Architecture Structural of DecodeStage is
 	signal ld_buff: std_logic;
 	signal is_branch1: std_logic_vector(2 downto 0);
 	signal is_branch2: std_logic_vector(2 downto 0);
+
+	signal rst_flush : std_logic;
 begin
-	inst1_tmp <= (others => '0') when flush = '1' else inst1;
-	inst2_tmp <= (others => '0') when flush = '1' else inst2;
-	inst1_tmp_ext(n_dword-1 downto n_word) <= (others => inst1_tmp (n_word-1));
-	inst2_tmp_ext(n_dword-1 downto n_word) <= (others => inst2_tmp (n_word-1));
+	rst_flush <= rst or flush;
+	inst1_tmp_ext(n_dword-1 downto n_word) <= (others => inst1(n_word-1));
+	inst2_tmp_ext(n_dword-1 downto n_word) <= (others => inst2(n_word-1));
 	packet_decoder:entity processor.PacketDecode
 	port map (
-		inst1_tmp,
-		inst2_tmp,
+		inst1,
+		inst2,
 		opcode1_inst,
 		src1_addr_inst,
 		dest1_addr_inst,
@@ -183,9 +182,9 @@ begin
 		dst1_addr_read => dest1_addr_cb,
 		val_dst1_out => val_dst1_out_temp,
 		src2_addr_read => src2_addr_cb,
-		val_src2_out => val_dst2_out_temp,
+		val_src2_out => val_src2_out_temp,
 		dst2_addr_read => dest2_addr_cb,
-		val_dst2_out=>val_src2_out_temp,
+		val_dst2_out=>val_dst2_out_temp,
 		addr1_write=>addr1_write ,
 		ld1_write=>ld1_write,
 		val1_write=>val1_write ,
@@ -193,7 +192,7 @@ begin
 		ld2_write=>ld2_write ,
 		val2_write=> val2_write,
 		clk=>clk,
-		rst=>rst	
+		rst=>rst_flush
 	);
 
 	jumper: entity processor.DirectJumper
@@ -209,7 +208,7 @@ begin
 	mem_inst_no <= '1' when mem_fun1 = mem_nop else '0';
 
 	mem_fun_in<=mem_fun1 or mem_fun2;
-	ld_buff<= ld and not(stall);
+	ld_buff<= not(stall);
 	wb_signal_inst1:entity processor.WBControl
 	port map (
 		opcode1_cb,
@@ -284,7 +283,7 @@ begin
 		mem_inst_no_out=> mem_inst_no_out,
 		clk=>clk,
 		ld=>ld_buff,
-		rst=>rst
+		rst=>rst_flush
 	);
 end Structural;
 

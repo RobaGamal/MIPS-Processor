@@ -1,0 +1,44 @@
+vsim processor.pipelinedprocessor4
+mem load -i /home/ruba/Documents/uni/arch/project/MIPS-Processor/tests/final_testcases/TwoOperand_asm.*mem /pipelinedprocessor4/fetch_stage/mem/ram
+force -freeze sim:/pipelinedprocessor4/clk 1 0, 0 {50 ps} -r 100
+
+
+add wave -position insertpoint  \
+sim:/pipelinedprocessor4/clk
+add wave -position insertpoint  \
+sim:/pipelinedprocessor4/inst1 \
+sim:/pipelinedprocessor4/inst2
+add wave -position insertpoint  \
+sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(0)/reg/q \
+sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(1)/reg/q  \
+sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(2)/reg/q  \
+sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(3)/reg/q  \
+sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(4)/reg/q  \
+sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(5)/reg/q  \
+sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(6)/reg/q  \
+sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(7)/reg/q  \
+
+force -freeze sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(1)/reg/d 5 0
+force -freeze sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(1)/reg/load 1 0
+
+
+force -freeze sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(2)/reg/d 19 0
+force -freeze sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(2)/reg/load 1 0
+
+
+force -freeze sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(3)/reg/d FFFF 0
+force -freeze sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(3)/reg/load 1 0
+
+force -freeze sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(4)/reg/d F320 0
+force -freeze sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(4)/reg/load 1 0
+
+
+
+run 100
+
+force -freeze sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(1)/reg/load 0 0
+force -freeze sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(2)/reg/load 0 0
+force -freeze sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(3)/reg/load 0 0
+force -freeze sim:/pipelinedprocessor4/decode_stage/regfile/reg_loop(4)/reg/load 0 0
+
+

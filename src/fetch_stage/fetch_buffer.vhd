@@ -23,12 +23,12 @@ begin
 	reg1: entity processor.Reg 
 	generic map (n)
 	port map (
-		inst1, out1, ld, clk, rst
+		inst1, out1, clk, ld, rst
 	);
 	
 	reg2: entity processor.Reg 
 	generic map (n)
 	port map (
-		inst2, out2, ld, clk, rst
+		inst2, out2, clk, ld, rst
 	);
 end Structural;

@@ -1,0 +1,41 @@
+vsim processor.pipelinedprocessor5
+mem load -i /home/ruba/Documents/uni/arch/project/MIPS-Processor/tests/final_testcases/Twoop.*mem /pipelinedprocessor5/fetch_stage/mem/ram
+force -freeze sim:/pipelinedprocessor5/clk 1 0, 0 {50 ps} -r 100
+
+
+add wave -position insertpoint  \
+sim:/pipelinedprocessor5/clk
+add wave -position insertpoint  \
+sim:/pipelinedprocessor5/inst1 \
+sim:/pipelinedprocessor5/inst2
+add wave -position insertpoint  \
+sim:/pipelinedprocessor5/decode_stage/regfile/reg_loop(0)/reg/q \
+sim:/pipelinedprocessor5/decode_stage/regfile/reg_loop(1)/reg/q  \
+sim:/pipelinedprocessor5/decode_stage/regfile/reg_loop(2)/reg/q  \
+sim:/pipelinedprocessor5/decode_stage/regfile/reg_loop(3)/reg/q  \
+sim:/pipelinedprocessor5/decode_stage/regfile/reg_loop(4)/reg/q  \
+sim:/pipelinedprocessor5/decode_stage/regfile/reg_loop(5)/reg/q  \
+sim:/pipelinedprocessor5/decode_stage/regfile/reg_loop(6)/reg/q  \
+sim:/pipelinedprocessor5/decode_stage/regfile/reg_loop(7)/reg/q  \
+add wave -position insertpoint  \
+sim:/pipelinedprocessor5/fetch_stage/pc_gen/pc_out
+
+force -freeze sim:/pipelinedprocessor5/rst 1 0
+run 100
+force rst 0
+run 100
+force -freeze sim:/pipelinedprocessor5/in_val 5 0
+force -freeze sim:/pipelinedprocessor5/in_ld 1 0
+run 100
+force -freeze sim:/pipelinedprocessor5/in_val 19 0
+force -freeze sim:/pipelinedprocessor5/in_ld 1 0
+run 100
+
+force -freeze sim:/pipelinedprocessor5/in_val FFFF 0
+force -freeze sim:/pipelinedprocessor5/in_ld 1 0
+run 100
+
+
+force -freeze sim:/pipelinedprocessor5/in_val F320 0
+force -freeze sim:/pipelinedprocessor5/in_ld 1 0
+run 100

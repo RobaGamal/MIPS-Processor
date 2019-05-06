@@ -112,7 +112,7 @@ mem_inst_no:entity processor.Reg
         dst_val_out => dst_val1_out,
         -- control
         clk=> clk,
-        ld=>'1',
+        ld=>ld,
         rst=>rst
     );
 
@@ -142,7 +142,7 @@ mem_inst_no:entity processor.Reg
         dst_val_out => dst_val2_out,
         -- control
         clk=> clk,
-        ld=>'1',
+        ld=>ld,
         rst=>rst
     );
 

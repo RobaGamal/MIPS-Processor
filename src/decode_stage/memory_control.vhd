@@ -30,10 +30,6 @@ begin
 			else
 				mem_fun <= mem_write;
 			end if;
-		elsif opcode = op_out then
-			mem_fun <= mem_read;
-		elsif opcode = op_in then
-			mem_fun <= mem_read;
 		end if;
 	end process;
 end Behavioral;

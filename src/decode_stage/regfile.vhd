@@ -48,22 +48,17 @@ begin
 		);
 		-- sign extend
 		q_arr(i)(n_dword-1 downto n_word) <= (others => q_arr(i)(n_word-1));
-
-		d_arr(i) <= val1_write when to_integer(unsigned(addr1_write)) = i else
-					val2_write when to_integer(unsigned(addr2_write)) = i;
-		l_arr(i) <= '1' when to_integer(unsigned(addr1_write)) = i or 
-							to_integer(unsigned(addr2_write)) = i
-						else '0';
 	end generate;
 
 	in_reg: entity processor.Reg
 	generic map (n_word)
 	port map (
-		d_arr(to_integer(unsigned(inregaddr)))(n_word-1 downto 0),
+		in_val,
 		q_arr(to_integer(unsigned(inregaddr)))(n_word-1 downto 0),
-		not_clk, in_ld, rst
+	 	not_clk, in_ld, rst
 	);
 
+	
 	sp_gen: entity processor.Reg
 	generic map (n_dword)
 	port map(
@@ -74,6 +69,23 @@ begin
 		rst
 	);
 	q_arr(to_integer(unsigned(pcregaddr))) <= pc_val;
+
+	process(ld1_write, ld2_write, addr1_write, addr2_write) is
+	begin
+		for i in 0 to 15 loop
+			l_arr(i) <= '0';
+			d_arr(i) <= (others => '0');
+		end loop;
+		for i in 0 to 15 loop
+			if to_integer(unsigned(addr1_write)) = i then
+				d_arr(i) <= val1_write;
+				l_arr(i) <= ld1_write;
+			elsif to_integer(unsigned(addr2_write)) = i then
+				d_arr(i) <= val2_write;
+				l_arr(i) <= ld2_write;
+			end if;
+		end loop;
+	end process;
 
 	val_src1_out <= q_arr(to_integer(unsigned(src1_addr_read)));
 	val_src2_out <= q_arr(to_integer(unsigned(src2_addr_read)));

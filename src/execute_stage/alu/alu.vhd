@@ -30,13 +30,15 @@ begin
 				a_tmp - b_tmp	when	fun = alu_sub else
 				b_tmp + 1		when	fun = alu_inc else
 				b_tmp - 1		when	fun = alu_dec else
+				b_tmp + 2		when	fun = alu_inc2 else
+				b_tmp - 2		when	fun = alu_dec2 else
 				not(b_tmp)		when	fun = alu_not else
 				a_tmp and b_tmp	when	fun = alu_and else
 				a_tmp or b_tmp	when	fun = alu_or  else
 				a_tmp 			when	fun = alu_first_op else
 				b_tmp 			when	fun = alu_second_op else
-				shift_left(a_tmp, to_integer(shift_tmp)) when fun = alu_shl else
-				shift_right(a_tmp, to_integer(shift_tmp)) when fun = alu_shr;
+				shift_left(b_tmp, to_integer(shift_tmp)) when fun = alu_shl else
+				shift_right(b_tmp, to_integer(shift_tmp)) when fun = alu_shr;
 
 	s <= std_logic_vector(s_tmp(2*n_word-1 downto 0));
 	

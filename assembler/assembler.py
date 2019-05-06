@@ -11,7 +11,8 @@ regs = {
 	"r6": "0110",
 	"r7": "0111",
 	"notregaddr": "1111",
-	"immregaddr": "1010"
+	"immregaddr": "1010",
+	"inregaddr": "1011"
 }
 
 no_ops = {
@@ -27,7 +28,6 @@ one_ops = {
 	"inc" : "00100",
 	"dec" : "00101",
 	"out" : "00110",
-	"in" : "00111",
 	"push" : "11000",
 	"pop" : "11001",
 	"ldm" : "11010",
@@ -38,12 +38,16 @@ one_ops = {
 	"call" : "10100",
 }
 
+in_op = {
+	"in" : "00111",
+}
+
 two_ops = {
 	"mov" : "01000",
 	"add" : "01001",
 	"sub" : "01010",
 	"and" : "01011",
-	"or" : "01000",
+	"or" : "01100",
 	"std" : "11100",
 	"ldd" : "11011",
 }
@@ -110,12 +114,10 @@ def handle_no_ops(line, state):
 
 def read_operand(line):
 	line = line.strip()
-	success = False
 	for key, value in regs.items():
 		if line.startswith(key):
 			line = line[len(key):]
 			op = value
-			success = True
 	return line, op
 
 def handle_two_ops(line, state):
@@ -145,7 +147,7 @@ def handle_shlshr(line, state):
 			line = line[len(key):]
 			inst += value
 			line, op1 = read_operand(line)
-			inst += op1
+			inst += regs["notregaddr"]
 			inst += op1
 			line = line.strip()
 			shift = line[0]
@@ -169,10 +171,27 @@ def handle_one_ops(line, state):
 			line = line[len(key):]
 			inst += value
 			line, op = read_operand(line)
-			inst += op
+			inst += regs["notregaddr"]
 			inst += op
 			inst += "000"
 			success = True
+	if success == False:
+		return False
+	state.mem[state.mem_index] = inst
+	state.mem_index += 1
+	return True
+
+def handle_in(line, state):
+	inst = ""
+	success = False
+	if line.startswith("in"):
+		line = line[len("in"):]
+		inst += in_op["in"]
+		inst += regs["inregaddr"]
+		line, op = read_operand(line)
+		inst += op
+		inst += "000"
+		success = True
 	if success == False:
 		return False
 	state.mem[state.mem_index] = inst
@@ -199,6 +218,8 @@ if __name__ == "__main__":
 			if handle_two_ops(line, state):
 				continue
 			if handle_shlshr(line, state):
+				continue
+			if handle_in(line, state):
 				continue
 	
 	with open(output_file_path, 'w') as file:

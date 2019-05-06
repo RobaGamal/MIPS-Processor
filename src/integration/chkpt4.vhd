@@ -8,7 +8,8 @@ port(
 
     clk:in std_logic ;
     interrupt:in std_logic;
-    
+    in_val :  in word_t;
+    in_ld : in  std_logic;
     rst:in std_logic
 );
 
@@ -86,6 +87,7 @@ signal jmp_cond_address:dword_t;
 signal pc_load:dword_t;
 signal is_jmp:std_logic;
 
+
 begin 
 branch_mode<=branch_exc or is_jmp;
 
@@ -119,7 +121,10 @@ decode_stage:entity processor. DecodeStage
 		-- IF/ID buffer
 		inst1 ,
 		inst2 ,
-		pc_val,
+        pc_val,
+        -- in operands
+        in_val ,
+		in_ld ,
 		-- Operands data
 		src1_add_out ,
 		val_src1_out,
@@ -156,29 +161,28 @@ decode_stage:entity processor. DecodeStage
 		is_jmp ,
 		jump_address ,
 		--General
-		flush , 
+		flush ,
 		clk ,
 		rst ,
-		stall ,
-		'1'
+		stall 
 	);
 
 
 
 
 
-    execute_stage:entity processor.Execute_stage 
+    execute_stage:entity processor.ExecuteStage 
     port map(   
-        src1_add_in=>src1_add_out,
-        dst1_add_in=>dst1_add_out ,
-        src2_add_in=>src2_add_out,
-        dst2_add_in=>dst2_add_out ,
-        val_dst1_in=>val_dst1_out,
-        val_src1_in=>val_src1_out,
-        val_dst2_in=>val_dst2_out,
-        val_src2_in=>val_src2_out,
+        src1_addr_in=>src1_add_out,
+        dst1_addr_in=>dst1_add_out ,
+        src2_addr_in=>src2_add_out,
+        dst2_addr_in=>dst2_add_out ,
+        dst1_val_in=>val_dst1_out,
+        src1_val_in=>val_src1_out,
+        dst2_val_in=>val_dst2_out,
+        src2_val_in=>val_src2_out,
         alu_op1_in=>alu_op1_out,
-        alu_op2_in=>alu_op1_out,
+        alu_op2_in=>alu_op2_out,
         branch_op1=>is_branch1_out ,
         branch_op2=>is_branch2_out ,
         update_flag_in1=>update_flag_out1,
@@ -196,10 +200,10 @@ decode_stage:entity processor. DecodeStage
         mem_inst_no_out=>mem_inst_no_out_ex,
         wb_1_out=>wb_1_out_ex,
         wb_2_out=>wb_2_out_ex,
-        src1_add_out=>src1_add_out_ex,
-        dst1_add_out=>dst1_add_out_ex,
-        src2_add_out=>src2_add_out_ex ,
-        dst2_add_out=>dst2_add_out_ex,
+        src1_addr_out=>src1_add_out_ex,
+        dst1_addr_out=>dst1_add_out_ex,
+        src2_addr_out=>src2_add_out_ex ,
+        dst2_addr_out=>dst2_add_out_ex,
         val_dst1_out=>val_dst1_out_ex,
         val_src1_out=>val_src1_out_ex,
         val_dst2_out=>val_dst2_out_ex,
@@ -208,10 +212,7 @@ decode_stage:entity processor. DecodeStage
         flush=>flush,
         clk=>clk,
         rst=>rst,
-        stall=>stall,
-        ld=>'1'
-
-
+        stall=>stall
     );
 
 

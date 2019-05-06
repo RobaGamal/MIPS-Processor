@@ -99,4 +99,12 @@ begin
     z_flag <= flag_q(z_flag_idx);
     n_flag <= flag_q(n_flag_idx);
     c_flag <= flag_q(c_flag_idx);
+
+    process(clk)
+	begin
+		if falling_edge(clk) then
+            report "ALUWithFlags flags = " & 
+            to_string(flag_q);
+        end if;
+	end process;
 end Structural;

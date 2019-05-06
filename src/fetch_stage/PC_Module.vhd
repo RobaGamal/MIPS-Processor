@@ -33,7 +33,7 @@ begin
 	);
    
 	pc_ld <= ld and not(stall);
-	pc_define: entity processor.PCReg generic map (n_dword)
+	pc_define: entity processor.PCReg
 	port map (
 		pc_in, pc_out, ld, clk, rst
 	);
