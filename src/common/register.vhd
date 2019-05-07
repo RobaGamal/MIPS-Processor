@@ -10,7 +10,8 @@ entity Reg is
     port (        
         d  : in std_logic_vector(n-1 downto 0) := (others => '0'); -- parallel input
         q  : out std_logic_vector(n-1 downto 0) := (others => '0'); -- parallel output
-	    clk, load, reset : in std_logic := '0' -- clock, load, and reset
+	    clk, load, reset : in std_logic := '0'; -- clock, load, and reset
+        init : in std_logic_vector(n-1 downto 0) := (others => '0')
     );
 end Reg;
 
@@ -19,7 +20,7 @@ begin
     process(clk, reset)
     begin
         if reset = '1' then
-            q <= (others => '0');
+            q <= init;
         elsif rising_edge(clk) then
             if load = '1' then
                 q <= d;

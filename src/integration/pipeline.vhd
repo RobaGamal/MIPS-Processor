@@ -95,8 +95,15 @@ architecture Structural of Pipeline is
 	signal src2_val_mem : dword_t;
 	signal flush_mem : std_logic := '0';
 	signal stall_mem : std_logic := '0';
-
-	-- writeback stage
+	-- Forwarding
+	signal src1_val_fwd_mem : dword_t;
+	signal dst1_val_fwd_mem : dword_t;
+	signal src2_val_fwd_mem : dword_t;
+	signal dst2_val_fwd_mem : dword_t;
+	signal src1_is_fwd_mem : std_logic;
+	signal dst1_is_fwd_mem : std_logic;
+	signal src2_is_fwd_mem : std_logic;
+	signal dst2_is_fwd_mem : std_logic;
 begin
 	fetch_stage: entity processor.FetchStage
 	port map (
@@ -229,7 +236,15 @@ begin
 		flush => flush_mem,
 		clk => clk,
 		rst => rst,
-		stall => stall_mem
+		stall => stall_mem,
+		dst1_val_fwd => dst1_val_fwd_mem,
+		src1_val_fwd => src1_val_fwd_mem,
+		dst2_val_fwd => dst2_val_fwd_mem,
+		src2_val_fwd => src2_val_fwd_mem,
+		dst1_is_fwd => dst1_is_fwd_mem,
+		src1_is_fwd => src1_is_fwd_mem,
+		dst2_is_fwd => dst2_is_fwd_mem,
+		src2_is_fwd => src2_is_fwd_mem
 	);
 
 	writeback_stage: entity processor.WriteBackStage
@@ -269,5 +284,21 @@ begin
 		src2_val_fwd_ex => src2_val_fwd_ex, dst2_val_fwd_ex => dst2_val_fwd_ex,
 		src1_is_fwd_ex => src1_is_fwd_ex, dst1_is_fwd_ex => dst1_is_fwd_ex,
 		src2_is_fwd_ex => src2_is_fwd_ex, dst2_is_fwd_ex => dst2_is_fwd_ex
+	);
+
+	mem_fwd: entity processor.MemoryForward
+	port map (
+		src1_addr_ex => src1_addr_ex, dst1_addr_ex => dst1_addr_ex,
+		src2_addr_ex => src2_addr_ex, dst2_addr_ex => dst2_addr_ex,
+		src1_val_ex => src1_val_ex, dst1_val_ex => dst1_val_ex,
+		src2_val_ex => src2_val_ex, dst2_val_ex => dst2_val_ex,
+		src1_addr_mem => src1_addr_mem, dst1_addr_mem => dst1_addr_mem,
+		src2_addr_mem => src2_addr_mem, dst2_addr_mem => dst2_addr_mem,
+		src1_val_mem => src1_val_mem, dst1_val_mem => dst1_val_mem,
+		src2_val_mem => src2_val_mem, dst2_val_mem => dst2_val_mem,
+		src1_val_fwd_mem => src1_val_fwd_mem, dst1_val_fwd_mem => dst1_val_fwd_mem,
+		src2_val_fwd_mem => src2_val_fwd_mem, dst2_val_fwd_mem => dst2_val_fwd_mem,
+		src1_is_fwd_mem => src1_is_fwd_mem, dst1_is_fwd_mem => dst1_is_fwd_mem,
+		src2_is_fwd_mem => src2_is_fwd_mem, dst2_is_fwd_mem => dst2_is_fwd_mem
 	);
 end Structural;
