@@ -48,8 +48,6 @@ begin
 			q_arr(i)(n_word-1 downto 0),
 			not_clk, l_arr(i), rst -- falling edge
 		);
-		-- sign extend
-		q_arr(i)(n_dword-1 downto n_word) <= (others => q_arr(i)(n_word-1));
 	end generate;
 
 	in_reg: entity processor.Reg
@@ -79,6 +77,11 @@ begin
 		rst
 	);
 	q_arr(to_integer(unsigned(pcregaddr))) <= pc_val;
+
+	sign_extend: for i in 0 to 15 generate
+		-- sign extend
+		q_arr(i)(n_dword-1 downto n_word) <= (others => q_arr(i)(n_word-1));
+	end generate;
 
 	process(ld1_write, ld2_write, addr1_write, addr2_write,
 			val1_write, val2_write) is

@@ -116,6 +116,16 @@ begin
             report "ALUWithFlags z_flag = " & to_string(flag_q(z_flag_idx)) &
                     " n_flag = " & to_string(flag_q(n_flag_idx)) &
                     " c_flag = " & to_string(flag_q(c_flag_idx));
+            report "ALUWithFlags z_flag_1 = " & to_string(z_flag1) &
+                " n_flag_1 = " & to_string(n_flag1) &
+                " c_flag_1 = " & to_string(c_flag1);
+            report "ALUWithFlags z_flag_2 = " & to_string(z_flag2) &
+                " n_flag_2 = " & to_string(n_flag2) &
+                " c_flag_2 = " & to_string(c_flag2);
+            report "ALUWithFlags update_flag1 = " & to_string(update_flag1) &
+                " update_flag2 = " & to_string(update_flag2);
+            report "ALUWithFlags fun1 = " & to_string(fun1) &
+                " fun2 = " & to_string(fun2);
         end if;
 	end process;
 end Structural;
