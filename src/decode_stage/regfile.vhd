@@ -10,6 +10,8 @@ entity RegFile is
 		-- IN register
 		in_val : in word_t;
 		in_ld : in std_logic;
+		-- OUT register
+		out_val : out word_t;
 		-- read operation
 		src1_addr_read : in regaddr_t;
 		val_src1_out : out dword_t;
@@ -58,6 +60,14 @@ begin
 	 	not_clk, in_ld, rst
 	);
 
+	out_reg: entity processor.Reg
+	generic map (n_word)
+	port map (
+		d_arr(to_integer(unsigned(outregaddr)))(n_word-1 downto 0),
+	 	q_arr(to_integer(unsigned(outregaddr)))(n_word-1 downto 0),
+	 	not_clk, l_arr(to_integer(unsigned(outregaddr))), rst
+	);
+	out_val <= q_arr(to_integer(unsigned(outregaddr)))(n_word-1 downto 0);
 	
 	sp_gen: entity processor.Reg
 	generic map (n_dword)
@@ -70,19 +80,20 @@ begin
 	);
 	q_arr(to_integer(unsigned(pcregaddr))) <= pc_val;
 
-	process(ld1_write, ld2_write, addr1_write, addr2_write) is
+	process(ld1_write, ld2_write, addr1_write, addr2_write,
+			val1_write, val2_write) is
 	begin
 		for i in 0 to 15 loop
 			l_arr(i) <= '0';
 			d_arr(i) <= (others => '0');
 		end loop;
 		for i in 0 to 15 loop
-			if to_integer(unsigned(addr1_write)) = i then
+			if to_integer(unsigned(addr1_write)) = i and ld1_write = '1' then
 				d_arr(i) <= val1_write;
-				l_arr(i) <= ld1_write;
-			elsif to_integer(unsigned(addr2_write)) = i then
+				l_arr(i) <= '1';
+			elsif to_integer(unsigned(addr2_write)) = i and ld2_write = '1' then
 				d_arr(i) <= val2_write;
-				l_arr(i) <= ld2_write;
+				l_arr(i) <= '1';
 			end if;
 		end loop;
 	end process;

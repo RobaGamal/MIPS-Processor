@@ -21,8 +21,10 @@ begin
 		alu_fun <= alu_second_op;
 		if opcode = op_setc  then
 			alu_fun <= alu_setc;
+			update_flag <= '1';
 		elsif opcode = op_clrc  then
 			alu_fun <= alu_clearc;
+			update_flag <= '1';
 		elsif opcode = op_not  then
 			alu_fun <= alu_not;
 			update_flag <= '1';
@@ -39,6 +41,8 @@ begin
 		elsif opcode = op_mov  then
 			alu_fun <= alu_first_op;
 		elsif opcode = op_in  then
+			alu_fun <= alu_first_op;
+		elsif opcode = op_out  then
 			alu_fun <= alu_first_op;
 		elsif opcode = op_add  then
 			alu_fun <= alu_add;
@@ -59,7 +63,7 @@ begin
 			alu_fun <= alu_shr;
 			update_flag <= '1';
 		end if;
-		if dst_addr = pcregaddr or dst_addr = spregaddr or dst_addr = notregaddr then
+		if dst_addr = pcregaddr or dst_addr = spregaddr then
 			update_flag <= '0';
 		end if;
 	end process;

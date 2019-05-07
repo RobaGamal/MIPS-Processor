@@ -33,9 +33,7 @@ entity Memory_stage is
         flush:in std_logic;
         clk:in std_logic;
         rst: in std_logic;
-        stall:in std_logic:='0';
-        ld: in std_logic:='1'
-
+        stall:in std_logic:='0'
 
     );
 end Memory_stage;
@@ -50,31 +48,8 @@ signal val_dst2_temp:dword_t;
 signal address:std_logic_vector(n_word - 1 downto 0);
 signal data_in : dword_t;
 signal data_out: dword_t;
-signal wb_1_in_temp:std_logic;
-signal wb_2_in_temp:std_logic;
-signal src1_add_in_temp:regaddr_t;
-signal dst1_add_in_temp:regaddr_t;
-signal src2_add_in_temp:regaddr_t;
-signal dst2_add_in_temp:regaddr_t;
-signal val_src1_in_temp:dword_t;
-signal val_dst1_in_temp:dword_t;
-signal val_src2_in_temp:dword_t;
-signal val_dst2_in_temp:dword_t;
 begin
-ld_buff<= ld and  not(stall) ;
-
-wb_1_in_temp <=  '0' when flush = '1' else wb_1_in;
-wb_2_in_temp<= '0' when flush = '1' else wb_2_in;
-
-src1_add_in_temp<=(others => '0') when flush = '1' else src1_add_in;
-dst1_add_in_temp<=(others => '0') when flush = '1' else dst1_add_in;
-src2_add_in_temp<=(others => '0') when flush = '1' else src2_add_in;
-dst2_add_in_temp<=(others => '0') when flush = '1' else dst2_add_in;
-val_src1_in_temp <= (others => '0') when flush = '1' else val_src1_in;
-val_src2_in_temp <= (others => '0') when flush = '1' else val_src1_in;
-
-val_dst1_in_temp <= (others => '0') when flush = '1' else val_dst1_temp;
-val_dst2_in_temp <= (others => '0') when flush = '1' else val_dst2_temp;
+ld_buff<= not(stall) ;
 
 data_ram:entity processor.Ram 
     generic map (n_word)
@@ -123,16 +98,16 @@ end process;
 memory_buffer: entity processor.Memory_Buffer 
 generic map(n_word) 
 port map(  
-        wb_1_in_temp,
-        wb_2_in_temp,
-        src1_add_in_temp,
-        dst1_add_in_temp,
-        src2_add_in_temp,
-        dst2_add_in_temp,
-        val_src1_in_temp,
-        val_dst1_in_temp,
-        val_src2_in_temp,
-        val_dst2_in_temp,
+        wb_1_in,
+        wb_2_in,
+        src1_add_in,
+        dst1_add_in,
+        src2_add_in,
+        dst2_add_in,
+        val_src1_in,
+        val_dst1_in,
+        val_src2_in,
+        val_dst2_in,
         
        
         wb_1_out,

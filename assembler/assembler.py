@@ -12,7 +12,8 @@ regs = {
 	"r7": "0111",
 	"notregaddr": "1111",
 	"immregaddr": "1010",
-	"inregaddr": "1011"
+	"inregaddr": "1011",
+	"outregaddr": "1100"
 }
 
 no_ops = {
@@ -27,7 +28,6 @@ one_ops = {
 	"not" : "00011",
 	"inc" : "00100",
 	"dec" : "00101",
-	"out" : "00110",
 	"push" : "11000",
 	"pop" : "11001",
 	"ldm" : "11010",
@@ -40,6 +40,7 @@ one_ops = {
 
 in_op = {
 	"in" : "00111",
+	"out" : "00110"
 }
 
 two_ops = {
@@ -181,7 +182,7 @@ def handle_one_ops(line, state):
 	state.mem_index += 1
 	return True
 
-def handle_in(line, state):
+def handle_inout(line, state):
 	inst = ""
 	success = False
 	if line.startswith("in"):
@@ -190,6 +191,14 @@ def handle_in(line, state):
 		inst += regs["inregaddr"]
 		line, op = read_operand(line)
 		inst += op
+		inst += "000"
+		success = True
+	elif line.startswith("out"):
+		line = line[len("out"):]
+		inst += in_op["out"]
+		line, op = read_operand(line)
+		inst += op
+		inst += regs["outregaddr"]
 		inst += "000"
 		success = True
 	if success == False:
@@ -219,7 +228,7 @@ if __name__ == "__main__":
 				continue
 			if handle_shlshr(line, state):
 				continue
-			if handle_in(line, state):
+			if handle_inout(line, state):
 				continue
 	
 	with open(output_file_path, 'w') as file:

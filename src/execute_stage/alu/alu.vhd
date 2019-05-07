@@ -18,12 +18,17 @@ entity ALU is
 end ALU;
 
 architecture Behavioral of ALU is
-signal a_tmp : unsigned(2*n_word downto 0);
-signal b_tmp : unsigned(2*n_word downto 0);
-signal s_tmp : unsigned(2*n_word downto 0);
-signal shift_tmp:unsigned(n_shiftamount-1 downto 0);
+signal a_tmp : unsigned(n_dword downto 0);
+signal b_tmp : unsigned(n_dword downto 0);
+signal b_tmp2 : unsigned(n_dword downto 0);
+signal s_tmp : unsigned(n_dword downto 0);
+signal shift_tmp : unsigned(n_shiftamount-1 downto 0);
+signal shift_tmp2 : unsigned(n_shiftamount-1 downto 0);
+signal shr_carry : std_logic;
+signal is_sub : std_logic;
 begin
-    shift_tmp<=unsigned(shift);
+	shift_tmp<=unsigned(shift);
+	shift_tmp2 <= shift_tmp + 1 when shift = "000" else shift_tmp;
 	a_tmp <= unsigned('0' & a);
 	b_tmp <= unsigned('0' & b);
 	s_tmp <=	a_tmp + b_tmp	when 	fun = alu_add else
@@ -40,10 +45,12 @@ begin
 				shift_left(b_tmp, to_integer(shift_tmp)) when fun = alu_shl else
 				shift_right(b_tmp, to_integer(shift_tmp)) when fun = alu_shr;
 
-	s <= std_logic_vector(s_tmp(2*n_word-1 downto 0));
-	
+	is_sub <= '1' when fun = alu_sub or fun = alu_dec else '0';
+	s <= std_logic_vector(s_tmp(n_dword-1 downto 0));
+	shr_carry <= b_tmp(to_integer(shift_tmp2 - 1));
 	z_flag <= '1' when s_tmp(n_word-1 downto 0) = 0 else '0';
 	n_flag <= s_tmp(n_word-1);
-	c_flag <= not(s_tmp(n_word - 1)) when fun = alu_sub else
-			  s_tmp(n_word);
+	c_flag <= '1' when is_sub = '1' and a < b else
+				'0' when is_sub = '1' else 
+				shr_carry when fun = alu_shr else s_tmp(n_dword);
 end Behavioral;

@@ -91,6 +91,7 @@ package config is
 	constant spregaddr : regaddr_t := "1001";
 	constant immregaddr_l : regaddr_t := "1010";
 	constant inregaddr : regaddr_t := "1011";
+	constant outregaddr : regaddr_t := "1100";
 	constant notregaddr : regaddr_t := "1111";
 	--constant n_shiftamount : natural := 4;
     constant n_shiftamount : natural := 3;

@@ -42,13 +42,13 @@ begin
 		if falling_edge(clk) then
 			if ld1_write = '1' then
 				report "WriteBack REG" & 
-				to_string(addr1_write) & " = " &
-				to_string(val1_write);
+				to_hstring(addr1_write) & " = " &
+				to_hstring(val1_write);
 			end if;
 			if ld2_write = '1' then
 				report "WriteBack REG" & 
-				to_string(addr2_write) & " = " &
-				to_string(val2_write);
+				to_hstring(addr2_write) & " = " &
+				to_hstring(val2_write);
 			end if;	
 		end if;
 	end process;

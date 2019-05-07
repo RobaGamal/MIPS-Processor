@@ -12,6 +12,8 @@ entity DecodeStage is
 		-- in port
 		in_val : in word_t;
 		in_ld : in std_logic;
+		-- out val
+		out_val : out word_t;
 		-- Operands data
 		src1_addr_out : out regaddr_t;
 		val_src1_out: out dword_t;
@@ -176,6 +178,7 @@ begin
 	port map (
 		pc_val => pc_val,
 		in_val => in_val,
+		out_val => out_val,
 		in_ld => in_ld,
 		src1_addr_read => src1_addr_cb,
 		val_src1_out => val_src1_out_temp,
@@ -192,7 +195,7 @@ begin
 		ld2_write=>ld2_write ,
 		val2_write=> val2_write,
 		clk=>clk,
-		rst=>rst_flush
+		rst=>rst
 	);
 
 	jumper: entity processor.DirectJumper

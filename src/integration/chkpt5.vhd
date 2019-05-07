@@ -218,7 +218,7 @@ decode_stage:entity processor. DecodeStage
     );
 
 
-    memory_stage:entity processor. Memory_stage 
+    memory_stage:entity processor.Memory_stage 
         port map ( 
             memrw =>mem_func_out_ex,
             mem_inst_no=>mem_inst_no_out_ex, 

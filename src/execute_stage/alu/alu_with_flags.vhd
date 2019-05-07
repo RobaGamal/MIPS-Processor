@@ -50,6 +50,9 @@ signal flag_d : std_logic_vector(2 downto 0);
 signal flag_q : std_logic_vector(2 downto 0);
 signal flag_ld : std_logic;
 
+signal is_logical_op1 : std_logic;
+signal is_logical_op2 : std_logic;
+
 constant z_flag_idx : integer := 0;
 constant c_flag_idx : integer := 1;
 constant n_flag_idx : integer := 2;
@@ -75,20 +78,27 @@ begin
             reset
         );
 
-    z_flag1 <= flag_q(z_flag_idx) when fun1 = alu_clearc or fun1 = alu_setc else
+    is_logical_op1 <= '1' when fun1 = alu_and or fun1 = alu_or or
+                        fun1 = alu_not else '0';
+    is_logical_op2 <= '1' when fun2 = alu_and or fun2 = alu_or or
+                        fun2 = alu_not else '0';
+
+    z_flag1 <= flag_q(z_flag_idx) when fun1 = alu_clearc or fun1 = alu_setc or update_flag1 = '0' else
                 z_flag1_tmp;
-    n_flag1 <= flag_q(n_flag_idx) when fun1 = alu_clearc or fun1 = alu_setc else
+    n_flag1 <= flag_q(n_flag_idx) when fun1 = alu_clearc or fun1 = alu_setc or update_flag1 = '0' else
                 n_flag1_tmp;
     c_flag1 <= '1' when fun1 = alu_setc else
                 '0' when fun1 = alu_clearc else
+                flag_q(c_flag_idx) when is_logical_op1 = '1' or update_flag1 = '0' else
                 c_flag1_tmp;
 
-    z_flag2 <= flag_q(z_flag_idx) when fun2 = alu_clearc or fun2 = alu_setc else
+    z_flag2 <= z_flag1 when fun2 = alu_clearc or fun2 = alu_setc else
                 z_flag2_tmp;
-    n_flag2 <= flag_q(n_flag_idx) when fun2 = alu_clearc or fun2 = alu_setc else
+    n_flag2 <= n_flag1 when fun2 = alu_clearc or fun2 = alu_setc else
                 n_flag2_tmp;
     c_flag2 <= '1' when fun2 = alu_setc else
                 '0' when fun2 = alu_clearc else
+                c_flag1 when is_logical_op2 = '1' else
                 c_flag2_tmp;
 
     flag_ld <= update_flag1 or update_flag2;
@@ -103,8 +113,9 @@ begin
     process(clk)
 	begin
 		if falling_edge(clk) then
-            report "ALUWithFlags flags = " & 
-            to_string(flag_q);
+            report "ALUWithFlags z_flag = " & to_string(flag_q(z_flag_idx)) &
+                    " n_flag = " & to_string(flag_q(n_flag_idx)) &
+                    " c_flag = " & to_string(flag_q(c_flag_idx));
         end if;
 	end process;
 end Structural;
