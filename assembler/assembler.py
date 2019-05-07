@@ -68,7 +68,7 @@ class State:
 	mem = {}
 
 def is_hex_str(s):
-	return set(s).issubset(string.hexdigits)
+	return set(s).issubset(string.hexdigits) and len(s) != 0
 
 def handle_org(line, state):
 	if not line.startswith('.org'):
@@ -82,11 +82,14 @@ def handle_numeric(line, state):
 	for key, _ in all_ops.items():
 		if line.startswith(key):
 			return False
+	line = line.strip()
 	if not is_hex_str(line):
 		return False
+	print(line)
 	x = str(bin(int(line, 16)))[2:]
 	while len(x) < 16:
 		x = "0" + x
+	print(x)
 	state.mem[state.mem_index] = x
 	state.mem_index += 1
 	return True
@@ -180,6 +183,7 @@ def handle_one_ops(line, state):
 		return False
 	state.mem[state.mem_index] = inst
 	state.mem_index += 1
+	handle_numeric(line, state)
 	return True
 
 def handle_inout(line, state):
