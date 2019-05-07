@@ -20,7 +20,7 @@ architecture Structural of Pipeline is
 	signal pc_out : dword_t;
 	signal branch_mode : std_logic := '0';
 	signal load_address : dword_t;
-	signal flush : std_logic := '0';
+	signal flush_fetch : std_logic := '0';
 	signal stall : std_logic := '0';
 
 	-- decode stage
@@ -51,7 +51,9 @@ architecture Structural of Pipeline is
 	signal ld2_write : std_logic := '0';
 	signal val2_write : dword_t := (others => '0');
 	signal is_jmp : std_logic;
+	signal is_jmp_q : std_logic;
 	signal load_address_decode : dword_t;
+	signal load_address_decode_q : dword_t;
 	signal flush_decode : std_logic := '0';
 	signal stall_decode : std_logic := '0';
 
@@ -112,7 +114,7 @@ begin
 		pc_out => pc_out,
 		stall => stall,
 		branch_mode => branch_mode,
-		flush => flush,
+		flush => flush_fetch,
 		clk => clk,
 		rst => rst
 	);
